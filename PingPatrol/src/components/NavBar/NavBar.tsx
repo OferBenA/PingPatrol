@@ -6,6 +6,9 @@ function NavBar() {
 	return (
 		<div className="navbar">
 			<div className="navbar-icon">
+				<div className="name">
+					<p >PingPatrol</p>
+				</div>
 				<img src={icon} alt="icon" />
 				<div className="slogen">
 					<p>monitor</p>

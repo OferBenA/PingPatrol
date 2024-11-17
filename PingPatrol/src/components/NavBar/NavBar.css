@@ -12,30 +12,36 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
-        gap: 10px;
+		gap: 13px;
 		img {
 			padding-top: 15px;
 			width: 60px;
 		}
-        .slogen{
-            padding-top: 10px;
-            p{
-                margin: 0 auto 0 auto;
-                text-align: start;
-
-            }
-            .everything{
-                font-family: Satoshi-Bold;
-                font-size: 25px;
-                font-weight: 700;
-            }
-        }
+		.name {
+			p {
+				padding-top: 12px;
+				font-size: 30px;
+				font-family: Satoshi-Bold;
+			}
+		}
+		.slogen {
+			padding-top: 10px;
+			p {
+				margin: 0 auto 0 auto;
+				text-align: start;
+			}
+			.everything {
+				font-family: Satoshi-Bold;
+				font-size: 25px;
+				font-weight: 700;
+			}
+		}
 	}
-    .login-register{
-        display: flex;
+	.login-register {
+		display: flex;
 		align-items: center;
 		justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 5px 20px;
-    }
+		flex-wrap: wrap;
+		gap: 5px 20px;
+	}
 }
