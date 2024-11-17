@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
-import { useUserContext } from "./Contexts/User-Context";
-import NotFound from "./pages/notFoundPage/NotFound";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { useUserContext } from "./Contexts/User-Context";
 import NavBar from "./components/NavBar/NavBar";
+import NotFound from "./pages/notFoundPage/NotFound";
 
 function App() {
 	const { userData } = useUserContext();
