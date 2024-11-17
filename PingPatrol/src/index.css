@@ -1,14 +1,44 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import './assets//fonts/satoshi.css';
 
+:root {
+  font-family: Satoshi-Regular, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #3a3b3f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+}
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+
+button{
+  padding: 5px 15px;
+  font-family: Satoshi-VariableItalic, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight:600;
+  border: none;
+  color: rgb(3, 3, 3);
+  transition: background-color 0.3s, color 0.3s;
+  &:hover{
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+  }
+  &:active{
+
+    background-color: rgb(27, 27, 27);
+    color: white;
+  }
+
 }
