@@ -3,6 +3,7 @@ import "./App.css";
 import { useUserContext } from "./Contexts/User-Context";
 import NavBar from "./components/NavBar/NavBar";
 import NotFound from "./pages/notFoundPage/NotFound";
+import LoginPage from "./pages/auth-pages/Login-page/LoginPage";
 
 function App() {
 	const { userData } = useUserContext();
@@ -12,11 +13,11 @@ function App() {
 			<BrowserRouter>
 				{!userData.isLoggedIn ? (
 					<>
-            <NavBar/>
+						<NavBar />
 						<Routes>
-							{/* <Route path="/" element={<LoginPage />} /> */}
-							{/* <Route path="/login" element={<LoginPage />} />
-							<Route path="/register" element={<Register />} />
+							<Route path="/" element={<LoginPage />} />
+							<Route path="/login" element={<LoginPage />} />
+							{/* <Route path="/register" element={<Register />} />
 							<Route path="/posts" element={<></>} />
 							<Route path="/forgot-password" element={<ForgotPasswordPage />} /> */}
 							<Route path="*" element={<NotFound />} />
@@ -25,7 +26,7 @@ function App() {
 				) : (
 					<Routes>
 						{/* <Route path="/" element={<PostsPage />} /> */}
-						<Route path="*" element={<NotFound />}/>
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 				)}
 			</BrowserRouter>

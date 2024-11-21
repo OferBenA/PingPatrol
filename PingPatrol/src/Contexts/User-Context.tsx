@@ -57,6 +57,3 @@ export const useUserContext = (): UserContextType => {
   }
   return context;
 };
-
-
-

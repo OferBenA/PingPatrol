@@ -1,5 +1,6 @@
 import { memo } from "react";
 import icon from "../../assets/PingPatrolLightIcon.png";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 
 function NavBar() {
@@ -16,7 +17,9 @@ function NavBar() {
 				</div>
 			</div>
 			<div className="login-register">
+				<Link to={"/login"}>
 				<button className="login">Login</button>
+				</Link>
 				<button className="register">Register</button>
 			</div>
 		</div>
