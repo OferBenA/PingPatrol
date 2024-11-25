@@ -20,7 +20,10 @@ function NavBar() {
 				<Link to={"/login"}>
 				<button className="login">Login</button>
 				</Link>
+				<Link to={"/register"}>
+
 				<button className="register">Register</button>
+				</Link>
 			</div>
 		</div>
 	);
