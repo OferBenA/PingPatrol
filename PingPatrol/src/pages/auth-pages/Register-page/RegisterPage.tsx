@@ -1,10 +1,7 @@
 import React, { ChangeEvent, memo, useState } from "react";
-import passwordHide from "../../../assets/assword-hide.svg";
-import passwordShow from "../../../assets/password-show.svg";
 import { Link } from "react-router-dom";
-import passwordConfirm from "../../../components/passwordConfirm/passwordConfirm";
 import "./RegisterPage.css";
-import PasswordConfirm from "../../../components/passwordConfirm/passwordConfirm";
+import PasswordConfirm from '../../../components/passwordConfirm/PasswordConfirm';
 
 export type ResterUserType = {
 	userName: string;
@@ -15,12 +12,11 @@ export type ResterUserType = {
 
 function RegisterPage() {
 	const [formData, setFormData] = useState<ResterUserType>({
+		email: "",
 		userName: "",
 		password: "",
-		email: "",
 		confirmPassword: "",
 	});
-	// const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -30,6 +26,7 @@ function RegisterPage() {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		//TODO - handle call to register in backend
 		console.log(`asd`);
 	};
 
@@ -62,7 +59,7 @@ function RegisterPage() {
 					</label>
 					<br />
 					<PasswordConfirm formData={formData} setFormData={setFormData}/>
-					<input className="input-submit" type="submit" value="Login" />
+					<input className="input-submit" type="submit" value="Register" />
 				</form>
 				<p className="dont-have-acc">Already have an account? </p>
 				<Link to={"/login"}>login</Link>

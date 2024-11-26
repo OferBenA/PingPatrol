@@ -1,24 +1,90 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ResterUserType } from "../../pages/auth-pages/Register-page/RegisterPage";
-import passwordShow from '../../assets/password-show.svg'
-import passwordHide from '../../assets/assword-hide.svg'
+import passwordShow from "../../assets/password-show.svg";
+import passwordHide from "../../assets/assword-hide.svg";
+import checkPass from "../../assets/check.svg";
+import checkfails from "../../assets/error.svg";
+import Utils from "../../services/utils.service";
 
-function PasswordConfirm({formData,setFormData,}: {
+type PasswordValidation = {
+    ispass8chars: boolean;
+    doesPassContainUpperCase: boolean;
+    doesPassContainSpceialChar: boolean;
+    doesPassMatch: boolean;
+}
+function PasswordConfirm({
+	formData,
+	setFormData,
+}: {
 	formData: ResterUserType;
-	setFormData: React.Dispatch<React.SetStateAction<ResterUserType>>}) {
-
+	setFormData: React.Dispatch<React.SetStateAction<ResterUserType>>;
+}) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [ispasswordValidationShown, setIspasswordValidationShown] = useState<boolean>(false);
+    const [passwordValidation, setPasswordValidation] = useState<PasswordValidation>({
+        ispass8chars: false,
+        doesPassContainUpperCase: false,
+        doesPassContainSpceialChar: false,
+        doesPassMatch: false,
+    })
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
+	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const password = e.target.value;
+		setIspasswordValidationShown(true);
+		checkPasswordLength(password);
+		checkUpperCase(password);
+		checkSpecialChar(password);
+		setFormData((prevState) => ({ ...prevState, password: password }));
 
-		setFormData((prevState) => ({ ...prevState, password: value }));
 	};
-    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
+	const handleConfirmPasswordChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const confirmPassword = e.target.value;
+		if (!ispasswordValidationShown) {
+			setIspasswordValidationShown(true);
+		}
 
-		setFormData((prevState) => ({ ...prevState, confirmPassword: value }));
+		setFormData((prevState) => ({ ...prevState, confirmPassword: confirmPassword }));
 	};
+
+	function checkPasswordLength(password: string): void {
+		if (password.length >= 8) {
+			setPasswordValidation((prevState) => ({ ...prevState,ispass8chars : true}));
+		} else {
+			setPasswordValidation((prevState) => ({ ...prevState,ispass8chars : false}))		}
+
+		}
+
+	function checkUpperCase(password: string): void {
+		if (/[A-Z]/.test(password)) {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassContainUpperCase : true}));
+		} else {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassContainUpperCase : false}));
+		}
+	}
+	function checkSpecialChar(password: string): void {
+		if (
+			password
+				.split("")
+				.some((char) => Utils.specialCharacters.includes(char))
+		) {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassContainSpceialChar : true}));
+		} else {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassContainSpceialChar : false}));
+		}
+	}
+    function checkPasswordMatch(): void {
+		if (formData.password == formData.confirmPassword && formData.password.length > 0) {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassMatch : true}));
+		} else {
+			setPasswordValidation((prevState) => ({ ...prevState,doesPassMatch : false}));
+		}
+	}
+    useEffect(()=>{
+        checkPasswordMatch()
+    },[formData])
+
 	return (
 		<>
 			<p>password </p>
@@ -57,6 +123,36 @@ function PasswordConfirm({formData,setFormData,}: {
 					alt="password-hide-icon"
 				/>
 			</label>
+			{ispasswordValidationShown && (
+				<div className="password-validation">
+					<ul>
+						<div className="li-div">
+							<li>password length must be at least 8 characters </li>
+							<img
+								className="check-img"
+								src={passwordValidation.ispass8chars ? checkPass : checkfails}
+								alt="v"
+							/>
+						</div>
+						<div className="li-div">
+							<li>password must contain at least one uppercase letter </li>
+							<img
+								className="check-img"
+								src={passwordValidation.doesPassContainUpperCase ? checkPass : checkfails}
+								alt="v"
+							/>
+						</div>
+						<div className="li-div">
+							<li>password must contain at least one special character </li>
+							<img className="check-img" src={passwordValidation.doesPassContainSpceialChar ? checkPass : checkfails} alt="v" />
+						</div>
+						<div className="li-div">
+							<li>passwords must match </li>
+							<img className="check-img" src={passwordValidation.doesPassMatch ? checkPass : checkfails} alt="v" />
+						</div>
+					</ul>
+				</div>
+			)}
 		</>
 	);
 }
