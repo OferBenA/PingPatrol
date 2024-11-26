@@ -1,6 +1,6 @@
 
 class Utils {
-  static convertQueryToNumber(param: any, defaultValue: number) {
+  static convertQueryToNumber() {
 
   }
   static specialCharacters = '!@#$%^&*()_+}{=~<>'

@@ -1,14 +1,9 @@
-import React, { ChangeEvent, memo, useState } from "react";
+import React, {  memo, useState } from "react";
 import "./LoginPage.css";
 import passwordHide from '../../../assets/assword-hide.svg'
 import passwordShow from '../../../assets/password-show.svg'
 import { Link } from 'react-router-dom';
-
-type LoginInfoType = {
-	userName: string;
-	password: string;
-};
-
+import { LoginInfoType } from "../../../types/MainTypes";
 
 
 function LoginPage() {

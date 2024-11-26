@@ -1,13 +1,8 @@
 import {memo} from 'react';
 import './FormInput.css'
+import { formInput } from '../../types/MainTypes';
 
-type formInput = {
 
-    name:string;
-    type:string;
-    value:string;
-    placeholder:string;
-}
 function FormInput({ name,type,value,placeholder}:formInput) {
 
 

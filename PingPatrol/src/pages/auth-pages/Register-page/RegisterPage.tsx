@@ -1,14 +1,10 @@
-import React, { ChangeEvent, memo, useState } from "react";
+import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./RegisterPage.css";
-import PasswordConfirm from '../../../components/passwordConfirm/PasswordConfirm';
+import PasswordConfirm from "../../../components/passwordConfirm/PasswordConfirm";
+import { PasswordValidation, ResterUserType } from "../../../types/MainTypes";
 
-export type ResterUserType = {
-	userName: string;
-	password: string;
-	email:string;
-	confirmPassword:string;
-};
+
 
 function RegisterPage() {
 	const [formData, setFormData] = useState<ResterUserType>({
@@ -17,12 +13,18 @@ function RegisterPage() {
 		password: "",
 		confirmPassword: "",
 	});
+	const [passwordValidation, setPasswordValidation] =
+		useState<PasswordValidation>({
+			ispass8chars: false,
+			doesPassContainUpperCase: false,
+			doesPassContainSpceialChar: false,
+			doesPassMatch: false,
+		});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prevState) => ({ ...prevState, [name]: value }));
 	};
-
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -58,7 +60,12 @@ function RegisterPage() {
 						/>
 					</label>
 					<br />
-					<PasswordConfirm formData={formData} setFormData={setFormData}/>
+					<PasswordConfirm
+						formData={formData}
+						setFormData={setFormData}
+						passwordValidation={passwordValidation}
+						setPasswordValidation={setPasswordValidation}
+					/>
 					<input className="input-submit" type="submit" value="Register" />
 				</form>
 				<p className="dont-have-acc">Already have an account? </p>
