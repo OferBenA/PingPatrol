@@ -13,15 +13,21 @@
 		align-items: center;
 		justify-content: space-around;
 		gap: 13px;
+
 		img {
 			padding-top: 15px;
 			width: 60px;
 		}
 		.name {
-			p {
-				padding-top: 12px;
-				font-size: 30px;
-				font-family: Satoshi-Bold;
+			.Link-to-home {
+				text-decoration: none;
+				color: inherit;
+				p {
+					color: inherit;
+					padding-top: 12px;
+					font-size: 30px;
+					font-family: Satoshi-Bold;
+				}
 			}
 		}
 		.slogen {

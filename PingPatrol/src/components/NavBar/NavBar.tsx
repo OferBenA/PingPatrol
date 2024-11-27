@@ -8,9 +8,12 @@ function NavBar() {
 		<div className="navbar">
 			<div className="navbar-icon">
 				<div className="name">
-					<p >PingPatrol</p>
+					<Link  className="Link-to-home" to={"/"}>
+						<p>PingPatrol</p>
+					</Link>
 				</div>
-				<img src={icon} alt="icon" />
+
+				<Link to={"/"}><img src={icon} alt="icon" /></Link>
 				<div className="slogen">
 					<p>monitor</p>
 					<p className="everything">everything</p>
@@ -18,11 +21,10 @@ function NavBar() {
 			</div>
 			<div className="login-register">
 				<Link to={"/login"}>
-				<button className="login">Login</button>
+					<button className="login">Login</button>
 				</Link>
 				<Link to={"/register"}>
-
-				<button className="register">Register</button>
+					<button className="register">Register</button>
 				</Link>
 			</div>
 		</div>
