@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express,{request, response} from 'express';
 import mongoose from 'mongoose';
+import userRouter from './controllers/users.router';
 
 
 
@@ -13,9 +14,9 @@ const port = process.env.SERVER_PORT || 3000
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/';
 
-// mongoose.connect(mongoURI).then(() =>{
-//     console.log(`mongoDB is connected to: ${mongoURI}`)
-// }).catch(err => console.error(err));
+mongoose.connect(mongoURI).then(() =>{
+    console.log(`mongoDB is connected to: ${mongoURI}`)
+}).catch(err => console.error(err));
 
 app.use('/public', express.static("./views/assets"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +30,7 @@ app.get(`/`, (req,res) =>{
     console.log(userAgent)
     res.status(200).json({status: 'great success'})
 })
+app.use('/api/users',userRouter);
 
 
 app.listen(port, () => {
