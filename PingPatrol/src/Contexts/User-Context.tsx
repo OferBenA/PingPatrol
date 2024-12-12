@@ -3,11 +3,8 @@ import { createContext, ReactNode, useMemo, useState, useContext } from "react";
 type User = {
     isLoggedIn: boolean;
     email: string;
-    firstName: string;
-    lastName: string;
     userId: string;
     username: string;
-    birthdate: string;
     devices: string[];
 };
 
@@ -20,11 +17,8 @@ const initalizeUserData = () => {
   return {
     isLoggedIn: false,
     email: '',
-    firstName: '',
-    lastName: '',
     userId: '',
     username: '',
-    birthdate: '',
     devices: [],
   }
 }

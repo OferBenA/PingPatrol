@@ -3,8 +3,8 @@ import passwordShow from "../../assets/password-show.svg";
 import passwordHide from "../../assets/assword-hide.svg";
 import checkPass from "../../assets/check.svg";
 import checkfails from "../../assets/error.svg";
-import Utils from "../../services/utils.service";
 import { PasswordValidation, ResterUserType } from "../../types/MainTypes";
+import { specialCharacters } from './../../services/utils.service';
 
 
 function PasswordConfirm({
@@ -80,7 +80,7 @@ function PasswordConfirm({
 	}
 	function checkSpecialChar(password: string): void {
 		if (
-			password.split("").some((char) => Utils.specialCharacters.includes(char))
+			password.split("").some((char) => specialCharacters.includes(char))
 		) {
 			setPasswordValidation((prevState) => ({
 				...prevState,

@@ -11,7 +11,7 @@ export type PasswordValidation = {
 	doesPassMatch: boolean;
 };
 export type LoginInfoType = {
-	userName: string;
+	emailOrUsername: string;
 	password: string;
 };
 export type formInput = {

@@ -36,6 +36,10 @@ function RegisterPage() {
 			alert("Please enter a valid user name");
 			return;
 		}
+		if(formData.userName.includes('@')){
+			alert("username with @ is not allowed");
+			return;
+		}
 		if (
 			!passwordValidation.ispass8chars ||
 			!passwordValidation.doesPassContainUpperCase ||
@@ -48,7 +52,6 @@ function RegisterPage() {
 			alert("passwords does not match");
 			return;
 		}
-		//TODO - handle call to register in backend
 
 		try {
 			const result = await axios({
