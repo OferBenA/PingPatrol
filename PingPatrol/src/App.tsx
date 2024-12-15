@@ -6,6 +6,7 @@ import LoginPage from "./pages/auth-pages/Login-page/LoginPage";
 import RegisterPage from "./pages/auth-pages/Register-page/RegisterPage";
 import "./App.css";
 import { useEffect, useLayoutEffect, useState } from "react";
+import AuthProvider from "./Contexts/Auth-Context";
 
 function App() {
 	const { userData } = useUserContext();
@@ -16,27 +17,28 @@ function App() {
 		setIsLoggedIn(window.localStorage.getItem("isLoggedIn") == "true");
 	}, [userData.isLoggedIn]);
 
-	//TODO - fix when refreshing the page, the user stays logged in
 	return (
 		<>
-			<BrowserRouter>
-				{!userData.isLoggedIn ? (
-					<>
-						<NavBar />
+			<AuthProvider>
+				<BrowserRouter>
+					{!isLoggedIn ? (
+						<>
+							<NavBar />
+							<Routes>
+								<Route path="/" element={<LoginPage />} />
+								<Route path="/login" element={<LoginPage />} />
+								<Route path="/register" element={<RegisterPage />} />
+								<Route path="*" element={<NotFound />} />
+							</Routes>
+						</>
+					) : (
 						<Routes>
-							<Route path="/" element={<LoginPage />} />
-							<Route path="/login" element={<LoginPage />} />
-							<Route path="/register" element={<RegisterPage />} />
+							{/* <Route path="/" element={<PostsPage />} /> */}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
-					</>
-				) : (
-					<Routes>
-						{/* <Route path="/" element={<PostsPage />} /> */}
-						<Route path="*" element={<NotFound />} />
-					</Routes>
-				)}
-			</BrowserRouter>
+					)}
+				</BrowserRouter>
+			</AuthProvider>
 		</>
 	);
 }

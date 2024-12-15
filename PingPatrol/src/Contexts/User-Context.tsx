@@ -13,7 +13,7 @@ type UserContextType = {
     dispatch?: (user: User) => void;
 }
 
-const initalizeUserData = () => {
+export const initalizeUserData = () => {
   return {
     isLoggedIn: false,
     email: '',
