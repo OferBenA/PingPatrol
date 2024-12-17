@@ -5,15 +5,16 @@ import NotFound from "./pages/notFoundPage/NotFound";
 import LoginPage from "./pages/auth-pages/Login-page/LoginPage";
 import RegisterPage from "./pages/auth-pages/Register-page/RegisterPage";
 import "./App.css";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AuthProvider from "./Contexts/Auth-Context";
+import HomePage from "./pages/logged-in-pages/HomePage/HomePage";
 
 function App() {
 	const { userData } = useUserContext();
 	const [isLoggedIn, setIsLoggedIn] = useState(
 		window.localStorage.getItem("isLoggedIn") == "true"
 	);
-	useLayoutEffect(() => {
+	useEffect(() => {
 		setIsLoggedIn(window.localStorage.getItem("isLoggedIn") == "true");
 	}, [userData.isLoggedIn]);
 
@@ -33,7 +34,7 @@ function App() {
 						</>
 					) : (
 						<Routes>
-							{/* <Route path="/" element={<PostsPage />} /> */}
+							<Route path="/" element={<HomePage />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 					)}

@@ -72,7 +72,6 @@ function AuthProvider ({ children }: { children: ReactNode }) {
         try {
           // we use here axios and NOT axiosClient to avoid interruptions of the request & response interceptors
           // (using localStorage) check if we already called in the lest minute to /token, if yes - don't call /token and use last token
-          //TODO - next lesson check with short expiry accessToken
           const lastAccessTokenRenewalStr = window.localStorage.getItem('latr');
           const lastAccessTokenRenewal = lastAccessTokenRenewalStr ? parseInt(lastAccessTokenRenewalStr) : 0;
           if (!isRefreshTokenActive.current && (Date.now() - lastAccessTokenRenewal > 10000 || !window.localStorage.getItem('accessToken'))) {

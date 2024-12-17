@@ -7,6 +7,7 @@ import axios from "axios";
 import { parseJwt } from "../../../services/utils.service";
 import { useUserContext } from "../../../Contexts/User-Context";
 import "./LoginPage.css";
+import { axiosClient } from "../../../axiosClient";
 
 function LoginPage() {
 	const [formData, setFormData] = useState<LoginInfoType>({
@@ -25,15 +26,10 @@ function LoginPage() {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
-			const response = await axios({
-				method: "post",
-				url: "http://localhost:3000/api/users/login",
-				data: {
-					emailOrUsername: formData.emailOrUsername,
+			const response = await axiosClient.post('/api/users/login', {
+				emailOrUsername: formData.emailOrUsername,
 					password: formData.password,
-				},
-				headers: { "Content-Type": "application/json" },
-			});
+			})
 			const accessToken = response?.data?.accessToken;
 			console.log(accessToken);
 			if (accessToken) {

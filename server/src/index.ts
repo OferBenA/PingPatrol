@@ -30,6 +30,7 @@ app.get(`/`, (req,res) =>{
     console.log(userAgent)
     res.status(200).json({status: 'great success'})
 })
+
 app.use('/api/users',userRouter);
 
 
