@@ -16,6 +16,7 @@ function App() {
 	);
 	useEffect(() => {
 		setIsLoggedIn(window.localStorage.getItem("isLoggedIn") == "true");
+		console.log(`userData.isLoggedIn triggerd curr status:${userData.isLoggedIn}`)
 	}, [userData.isLoggedIn]);
 
 	return (
@@ -33,10 +34,13 @@ function App() {
 							</Routes>
 						</>
 					) : (
+						<>
+						<NavBar />
 						<Routes>
 							<Route path="/" element={<HomePage />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
+						</>
 					)}
 				</BrowserRouter>
 			</AuthProvider>

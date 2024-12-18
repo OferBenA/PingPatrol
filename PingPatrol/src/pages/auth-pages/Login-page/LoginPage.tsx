@@ -93,10 +93,10 @@ function LoginPage() {
 						/>
 					</label>
 					<br />
-					<input className="input-submit" type="submit" value="Login" />
+					<input className="button input-submit" type="submit" value="Login" />
 				</form>
 				<p className="dont-have-acc">don't have and account? </p>
-				<Link to={"/register"}>register</Link>
+				<Link to={"/register"} className="text-indigo-400">register</Link>
 			</div>
 		</div>
 	);

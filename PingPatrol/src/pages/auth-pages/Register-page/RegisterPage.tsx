@@ -111,10 +111,10 @@ function RegisterPage() {
 						passwordValidation={passwordValidation}
 						setPasswordValidation={setPasswordValidation}
 					/>
-					<input className="input-submit" type="submit" value="Register" />
+					<input className="button input-submit" type="submit" value="Register" />
 				</form>
 				<p className="dont-have-acc">Already have an account? </p>
-				<Link to={"/login"}>login</Link>
+				<Link to={"/login"} className='text-indigo-400'>login</Link>
 			</div>
 		</div>
 	);

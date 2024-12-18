@@ -1,5 +1,7 @@
 @import './assets//fonts/satoshi.css';
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --dark-text-color: rgb(3, 3, 3);
@@ -21,6 +23,9 @@
 *::before,
 *::after{
   box-sizing: border-box;
+}
+.leftNavBarBtn{
+  @apply bg-gray-800 px-3 hover:cursor-pointer text-lg;
 }
 
 button{

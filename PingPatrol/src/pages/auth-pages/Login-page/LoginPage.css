@@ -15,6 +15,7 @@
         padding: 20px;
         border-radius: 30px;
         h2{
+            font-size: large;
             font-family: Satoshi-Bold, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         }
         span{
@@ -36,6 +37,9 @@
             &:hover{
                 cursor: pointer;
             }
+        }
+        .last-input{
+            margin-bottom: 10px;
         }
 
         .password-label{

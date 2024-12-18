@@ -20,3 +20,4 @@ export type formInput = {
     value:string;
     placeholder:string;
 }
+export type PageViewingType = 'dashboard' | 'addItem';

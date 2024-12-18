@@ -5,3 +5,26 @@
   align-items: center;
   justify-content: center;
 }
+
+.button{
+  padding: 5px 15px;
+  font-family: Satoshi-VariableItalic, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--main-components-color);
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight:600;
+  border: none;
+  color: var(--dark-text-color);
+  transition: background-color 0.3s, color 0.3s;
+  &:hover{
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+  }
+  &:active{
+
+    background-color: rgb(27, 27, 27);
+    color: white;
+  }
+
+}

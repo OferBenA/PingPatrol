@@ -3,8 +3,10 @@ import icon from "../../assets/PingPatrolLightIcon.png";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { useUserContext } from "../../Contexts/User-Context";
+import { useAuthContext } from "../../Contexts/Auth-Context";
 function NavBar() {
 	const { userData } = useUserContext();
+	const { logout } = useAuthContext();
 
 	return (
 		<div className="navbar">
@@ -21,8 +23,7 @@ function NavBar() {
 					<p className="everything">everything</p>
 				</div>
 			</div>
-			{userData.isLoggedIn ?
-
+			{!userData.isLoggedIn ?
 			<div className="login-register">
 				<Link to={"/login"}>
 					<button className="login">Login</button>
@@ -33,7 +34,7 @@ function NavBar() {
 			</div>
 			:
 			<div className="login-register">
-				<button>logout</button>
+				<button onClick={logout}>logout</button>
 			</div>
 			}
 		</div>
