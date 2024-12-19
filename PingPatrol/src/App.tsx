@@ -5,25 +5,25 @@ import NotFound from "./pages/notFoundPage/NotFound";
 import LoginPage from "./pages/auth-pages/Login-page/LoginPage";
 import RegisterPage from "./pages/auth-pages/Register-page/RegisterPage";
 import "./App.css";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import AuthProvider from "./Contexts/Auth-Context";
 import HomePage from "./pages/logged-in-pages/HomePage/HomePage";
 
 function App() {
 	const { userData } = useUserContext();
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		window.localStorage.getItem("isLoggedIn") == "true"
-	);
-	useEffect(() => {
-		setIsLoggedIn(window.localStorage.getItem("isLoggedIn") == "true");
-		console.log(`userData.isLoggedIn triggerd curr status:${userData.isLoggedIn}`)
-	}, [userData.isLoggedIn]);
+	// const [isLoggedIn, setIsLoggedIn] = useState(
+	// 	window.localStorage.getItem("isLoggedIn") == "true"
+	// );
+	// useEffect(() => {
+	// 	setIsLoggedIn(window.localStorage.getItem("isLoggedIn") == "true");
+	// 	console.log(`userData.isLoggedIn triggerd curr status:${userData.isLoggedIn}`)
+	// }, [userData.isLoggedIn]);
 
 	return (
 		<>
 			<AuthProvider>
 				<BrowserRouter>
-					{!isLoggedIn ? (
+					{!userData.isLoggedIn ? (
 						<>
 							<NavBar />
 							<Routes>
