@@ -3,10 +3,8 @@ import icon from "../../assets/PingPatrolLightIcon.png";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { useUserContext } from "../../Contexts/User-Context";
-import { useAuthContext } from "../../Contexts/Auth-Context";
 function NavBar() {
 	const { userData } = useUserContext();
-	const { logout } = useAuthContext();
 
 	return (
 		<div className="navbar">
@@ -33,8 +31,8 @@ function NavBar() {
 				</Link>
 			</div>
 			:
-			<div className="login-register">
-				<button onClick={logout}>logout</button>
+			<div className="">
+				<h4 className="font-bold">Welcome back <div className="font-semibold text-lg inline">{userData?.username}</div></h4>
 			</div>
 			}
 		</div>

@@ -14,10 +14,16 @@ export type LoginInfoType = {
 	emailOrUsername: string;
 	password: string;
 };
+export type addItemType = {
+	ipOrDns: string;
+	name: string;
+	favorite:boolean;
+	isIpOrDns: 'ip' | 'dns' | undefined
+};
 export type formInput = {
     name:string;
     type:string;
     value:string;
     placeholder:string;
 }
-export type PageViewingType = 'dashboard' | 'addItem';
+export type PageViewingType = 'Dashboard' | 'AddItem';

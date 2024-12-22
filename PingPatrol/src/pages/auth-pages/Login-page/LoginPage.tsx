@@ -31,7 +31,6 @@ function LoginPage() {
 					password: formData.password,
 			})
 			const accessToken = response?.data?.accessToken;
-			console.log(accessToken);
 			if (accessToken) {
 				const refreshToken = response?.data?.refreshToken;
 				window.localStorage.setItem("accessToken", accessToken); // store accessToken in localStorage
