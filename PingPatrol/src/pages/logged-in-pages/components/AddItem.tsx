@@ -1,17 +1,20 @@
-import { memo, useRef, useState } from "react";
-import { addItemType } from "../../../types/MainTypes";
+import { memo, useState } from "react";
+import { PageViewingType, addItemType } from "../../../types/MainTypes";
 import { axiosClient } from "../../../axiosClient";
 import ipaddress from "../../../assets/ip-adress.png";
 import dns from "../../../assets/dns.png";
 import axios from "axios";
+import { useUserContext } from "../../../Contexts/User-Context";
 
-function AddItem() {
+function AddItem({setPageViewing,}: {setPageViewing: (arg0: PageViewingType) => void;}) {
 	const [formData, setFormData] = useState<addItemType>({
 		ipOrDns: "",
 		name: "",
 		favorite: false,
 		isIpOrDns: undefined,
 	});
+  const { userData } = useUserContext();
+
 
 	const handleIpOrDnsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const ipOrDns = e.target.value;
@@ -26,26 +29,28 @@ function AddItem() {
 		if (/^[0-9.]+$/.test(formData.ipOrDns)) {
 			setFormData((prev) => ({ ...prev, isIpOrDns: "ip" }));
 			return;
-		} else if (formData.ipOrDns?.length > 8) {
+		} else   {
 			setFormData((prev) => ({ ...prev, isIpOrDns: "dns" }));
 			return;
-		} else{
-      setFormData((prev) => ({ ...prev, isIpOrDns: undefined }));
-    }
+		}
 	}
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		try {
-			// TODO - create route for this in backEnd
-			const response = await axiosClient.put("/api/users/login", {
+			const response = await axiosClient.put("/api/domains/create", {
 				ipOrDns: formData.ipOrDns,
 				name: formData.name,
-				favorite: formData.favorite,
+				isFavorite: formData.favorite,
 				isIpOrDns: formData.isIpOrDns,
+        userId: userData.userId,
 			});
+      alert(response.data.message)
+      setPageViewing('Dashboard');
+
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
+        console.log(err)
 				alert(`unable to log in: ${err.response?.data}`);
 			}
 		}
@@ -60,7 +65,7 @@ function AddItem() {
 					<label className="relative">
 						<br />
 						<input
-							className="my-2 mb-4 p-2"
+							className="my-2 mb-4 p-2 text-base w-64"
 							name="ipOrDns"
 							type="text"
 							placeholder="ip \ dns"
@@ -80,7 +85,7 @@ function AddItem() {
 					<label className="">
 						<br />
 						<input
-							className="my-2 mb-4 p-2"
+							className="my-2 mb-4 p-2 text-base w-64"
 							name="name"
 							type="text"
 							placeholder="name"
@@ -94,18 +99,18 @@ function AddItem() {
 					</label>
 					<br />
 					<span>add to favorites: </span>
-					<label className="">
+					<div className="relative mt-8 mb-6 inline">
 						<input
 							name="favorite"
-							className="ml-3 mb-6 p-2 "
+							className=" ml-5 mt-1 p-1 w-5 h-6 absolute"
 							type="checkbox"
 							checked={formData.favorite}
 							onChange={handleCheckedChange}
 						/>
-					</label>
+					</div>
 					<br />
 					<input
-						className="bg-slate-200 text-black px-5 py-2 rounded-xl hover:cursor-pointer"
+						className="bg-slate-200 text-black mt-6 px-5 py-2 rounded-xl hover:cursor-pointer"
 						type="submit"
 						value="Add to dashboard"
 					/>

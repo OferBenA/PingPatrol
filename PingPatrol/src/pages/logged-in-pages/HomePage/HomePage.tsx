@@ -10,7 +10,7 @@ function HomePage() {
 			<LeftNavBar setPageViewing={setPageViewing} />
 
 			<div className="mt-32 ml-36 w-10/12 h-[calc(100vh-140px)]">
-				{pageViewing == "AddItem" && <AddItem />}
+				{pageViewing == "AddItem" && <AddItem  setPageViewing={setPageViewing}/>}
 			</div>
 		</>
 	);

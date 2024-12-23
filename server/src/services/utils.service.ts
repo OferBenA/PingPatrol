@@ -14,7 +14,7 @@ class Utils {
 
     return defaultValue;
   }
-  private static  expirationTime = `${process.env.ACCESS_TOKEN_EXPIRATION_TIME || 30000}ms`
+  private static  expirationTime = `${process.env.ACCESS_TOKEN_EXPIRATION_TIME || '2h'}`
 
 
   static validateRequiredParams = (requaredFields: string[]) => {

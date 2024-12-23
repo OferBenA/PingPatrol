@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import express,{request, response} from 'express';
 import mongoose from 'mongoose';
 import userRouter from './controllers/users.router';
+import domainsRouter from './controllers/domains.router';
+import { authMiddleware } from './middlewares/authMiddleware';
 
 
 
@@ -32,6 +34,7 @@ app.get(`/`, (req,res) =>{
 })
 
 app.use('/api/users',userRouter);
+app.use('/api/domains',authMiddleware, domainsRouter);
 
 
 app.listen(port, () => {
