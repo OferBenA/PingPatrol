@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { PageViewingType, addItemType } from "../../../types/MainTypes";
 import { axiosClient } from "../../../axiosClient";
 import ipaddress from "../../../assets/ip-adress.png";
@@ -6,35 +6,44 @@ import dns from "../../../assets/dns.png";
 import axios from "axios";
 import { useUserContext } from "../../../Contexts/User-Context";
 
-function AddItem({setPageViewing,}: {setPageViewing: (arg0: PageViewingType) => void;}) {
+function AddItem({
+	setPageViewing,
+}: {
+	setPageViewing: (arg0: PageViewingType) => void;
+}) {
 	const [formData, setFormData] = useState<addItemType>({
 		ipOrDns: "",
 		name: "",
 		favorite: false,
 		isIpOrDns: undefined,
 	});
-  const { userData } = useUserContext();
+	const { userData } = useUserContext();
 
+	const handleIpOrDnsChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const ipOrDns = e.target.value;
+			checkIpOrDns();
+			setFormData((prevState) => ({ ...prevState, ipOrDns }));
+		},
+		[formData]
+	);
 
-	const handleIpOrDnsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const ipOrDns = e.target.value;
-		checkIpOrDns();
-		setFormData((prevState) => ({ ...prevState, ipOrDns }));
-	};
-	const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleCheckedChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.checked;
 		setFormData((prev) => ({ ...prev, favorite: inputValue }));
-	};
-	function checkIpOrDns() {
+	},[formData]);
+
+	const  checkIpOrDns = useCallback(() => {
 		if (/^[0-9.]+$/.test(formData.ipOrDns)) {
 			setFormData((prev) => ({ ...prev, isIpOrDns: "ip" }));
 			return;
-		} else   {
+		} else {
 			setFormData((prev) => ({ ...prev, isIpOrDns: "dns" }));
 			return;
 		}
-	}
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	},[formData])
+
+	const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		try {
@@ -43,18 +52,17 @@ function AddItem({setPageViewing,}: {setPageViewing: (arg0: PageViewingType) => 
 				name: formData.name,
 				isFavorite: formData.favorite,
 				isIpOrDns: formData.isIpOrDns,
-        userId: userData.userId,
+				userId: userData.userId,
 			});
-      alert(response.data.message)
-      setPageViewing('Dashboard');
-
+			alert(response.data.message);
+			setPageViewing("Dashboard");
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
-        console.log(err)
+				console.log(err);
 				alert(`unable to log in: ${err.response?.data}`);
 			}
 		}
-	};
+	},[formData]);
 
 	return (
 		<div className=" w-full h-full flex justify-center items-start">
@@ -76,7 +84,7 @@ function AddItem({setPageViewing,}: {setPageViewing: (arg0: PageViewingType) => 
 						/>
 						<img
 							className="w-7 ml-2 mt-4 inline absolute"
-							src={formData.isIpOrDns == 'ip' ?  ipaddress : dns}
+							src={formData.isIpOrDns == "ip" ? ipaddress : dns}
 							alt="ipaddress/dns"
 						/>
 					</label>
