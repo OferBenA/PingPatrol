@@ -59,7 +59,7 @@ function AddItem({
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				console.log(err);
-				alert(`unable to log in: ${err.response?.data}`);
+				alert(`unable to create domain: ${err.response?.data}`);
 			}
 		}
 	},[formData]);

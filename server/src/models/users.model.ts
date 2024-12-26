@@ -6,7 +6,12 @@ const userSchema = new Schema({
   email: { type: String },
   userName: { type: String },
   password: { type: String },
-  domains: {type: [String]}
+  domains: {type: [{
+    ipOrDns: String,
+    isFavorite: Boolean,
+    name: String,
+    domainId: String,
+  }]}
 });
 
 export const UserModel = model('userModel', userSchema);
