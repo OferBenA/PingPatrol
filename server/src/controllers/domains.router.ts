@@ -19,27 +19,31 @@ domainsRouter.put("/create", async (req, res) => {
 			const domainAlreadyExist = await DomainModel.findOne({ domain: ipOrDns });
 
 			//the domain is already created in the domainModel, just need to update
-			if(domainAlreadyExist){
-				console.log(domainAlreadyExist)
-				const domainAlreadyInUserModel = user.domains.some((domain) =>domain.ipOrDns?.includes(ipOrDns));
+			if (domainAlreadyExist) {
+				console.log(domainAlreadyExist);
+				const domainAlreadyInUserModel = user.domains.some((domain) =>
+					domain.ipOrDns?.includes(ipOrDns)
+				);
 				if (!domainAlreadyInUserModel) {
 					user.domains.push({
 						ipOrDns,
 						isFavorite,
 						name,
-						domainId: domainAlreadyExist.id ?? '',
+						domainId: domainAlreadyExist.id ?? "",
 					});
 					await user.save();
-					res.status(201).json({ message: 'domain added to user successfully', domainId });
+					res
+						.status(201)
+						.json({ message: "domain added to user successfully", domainId });
 					return;
 				}
 			}
 			//if there is no domainModel already created, create new domain, and update the user model with the new domain.
-			else{
+			else {
 				await DomainModel.create({
 					id: domainId,
 					createdDate: new Date(),
-					isIpOrDns: isIpOrDns == 'ip' ? 'ip' : 'dns',
+					isIpOrDns: isIpOrDns == "ip" ? "ip" : "dns",
 					domain: ipOrDns,
 				});
 				user.domains.push({
@@ -49,7 +53,12 @@ domainsRouter.put("/create", async (req, res) => {
 					domainId: domainId,
 				});
 				await user.save();
-				res.status(201).json({ message: 'domain created successfully and added to the user!', domainId });
+				res
+					.status(201)
+					.json({
+						message: "domain created successfully and added to the user!",
+						domainId,
+					});
 			}
 			return;
 		}
@@ -60,22 +69,80 @@ domainsRouter.put("/create", async (req, res) => {
 	}
 });
 
-domainsRouter.get('/:userId' ,async (req,res) =>{
-	const {userId} = req.params;
+domainsRouter.get("/allPerUser", async (req, res) => {
+	const { userId } = (req as any).userData;
 	try {
-		const userData =await UserModel.findOne({userId: userId})
-		if(!userData){
-			res.status(400).send('Error finding the user in the DataBase');
-			return
+		const userData = await UserModel.findOne({ userId: userId });
+		if (!userData) {
+			res.status(400).send("Error finding the user in the DataBase");
+			return;
 		}
 		res.status(200).json(userData);
 	} catch (error) {
 		console.error("Error finding user in the db: ", error);
 		res.status(500).send("Error finding user in DB.");
-
 	}
-
-
 });
+domainsRouter.post("/updateDomainPerUser", async (req, res) => {
+	const { userId } = (req as any).userData;
+	const domainToUpdate = req.body;
+	if (!domainToUpdate) {
+		res.status(400).send("error changing domain details");
+		return;
+	}
+	try {
+		const user = await UserModel.findOne({ userId: userId });
+		if(!user){
+			res.status(400).send("error finding user");
+			return;
+		}
+		//i want to find the currect domain from UserModel.domains,
+		// remove the old one, and replace it with the new one
+		const indexToDelete = user?.domains.findIndex(
+			(domain) => domainToUpdate.domainId == domain.domainId
+		);
+		if (!indexToDelete && indexToDelete != 0) {
+			res.status(400).send("error changing domain details");
+			return;
+		}
+		user?.domains.splice(indexToDelete, 1, domainToUpdate);
+		await user?.save();
+		res.send(`user changed successfully`);
+		return;
+	} catch (error) {
+		console.error(`error accrued while trying to change a user ${error}`)
+	}
+});
+domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
+	const { userId } = (req as any).userData;
+	const {domainId} = req.params;
+	if (!domainId) {
+		res.status(400).send("error changing domain details");
+		return;
+	}
+	console.log(domainId)
+	try {
+		const user = await UserModel.findOne({ userId: userId });
+		if(!user){
+			res.status(400).send("error finding user");
+			return;
+		}
+		const indexToDelete = user?.domains.findIndex(
+			(domain) => domainId == domain.domainId
+		);
+		if (!indexToDelete && indexToDelete != 0) {
+			res.status(400).send(`error deleting domain ${domainId}`);
+			return;
+		}
+		user?.domains.splice(indexToDelete, 1);
+
+
+		await user?.save();
+		res.send(`domain in user deleted successfully`);
+		return;
+	} catch (error) {
+		console.error(`error accrued while trying to change a user ${error}`)
+	}
+})
 
 export default domainsRouter;
