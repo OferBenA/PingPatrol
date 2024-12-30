@@ -35,7 +35,7 @@ function Domains() {
 	const fetchData = useCallback(async () => {
 		const data = await axiosClient.get(`/api/domains/allPerUser`);
 		if (data) {
-			setDomainData(data.data.domains);
+			setDomainData(data.data);
 		}
 	}, [domainData]);
 
@@ -50,6 +50,7 @@ function Domains() {
 
 	if(!domainData){
 		return(
+
 			<Skeleton/>
 		)
 	}
