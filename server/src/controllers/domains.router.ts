@@ -10,7 +10,7 @@ const domainsRouter = express.Router();
 //if not in domain model: create new DomainModel and add is to the domains in UserModel
 domainsRouter.put("/create", async (req, res) => {
 	const { ipOrDns, name, isFavorite, isIpOrDns, userId } = req.body;
-
+	console.log(`entered create endpoint ${ipOrDns}`)
 	const domainId = uuidv4();
 
 	try {
@@ -46,7 +46,7 @@ domainsRouter.put("/create", async (req, res) => {
 					isIpOrDns: isIpOrDns == "ip" ? "ip" : "dns",
 					domain: ipOrDns,
 				});
-				user.domains.push({
+				 user.domains.push({
 					ipOrDns,
 					isFavorite,
 					name,

@@ -4,14 +4,16 @@ import deleteIcon from "../../../assets/delete.svg";
 import emptyStarIcon from "../../../assets/star.svg";
 import fillStarIcon from "../../../assets/fillstar.svg";
 import { domainDataType } from "../../../types/MainTypes";
+import Skeleton from "./Skeleton/Skeleton";
 
 function Domains() {
 	// const { userData } = useUserContext();
-	const [domainData, setDomainData] = useState<domainDataType[]>();
+	const [domainData, setDomainData] = useState<domainDataType[] |null>();
 
 	const handleFavorite = useCallback(
 		async (domain: domainDataType) => {
 			domain.isFavorite = !domain.isFavorite;
+			setDomainData(null)
 			await axiosClient.post(`/api/domains/updateDomainPerUser`, domain);
 			fetchData();
 		},
@@ -22,6 +24,7 @@ function Domains() {
 		async (domain: domainDataType) => {
 			const affirm = confirm(`are you sure you want to delete ${domain.ipOrDns} ?`)
 			if(affirm){
+				setDomainData(null)
 				await axiosClient.delete(`/api/domains/deleteDomainPerUser/${domain.domainId}`);
 				fetchData();
 			}
@@ -44,6 +47,12 @@ function Domains() {
 		}
 	}, []);
 
+
+	if(!domainData){
+		return(
+			<Skeleton/>
+		)
+	}
 	return (
 		<>
 			<div className="flex justify-center flex-wrap gap-4 align-top">
