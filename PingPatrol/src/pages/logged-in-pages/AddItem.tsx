@@ -1,16 +1,13 @@
 import { memo, useCallback, useState } from "react";
-import { PageViewingType, addItemType } from "../../../types/MainTypes";
-import { axiosClient } from "../../../axiosClient";
-import ipaddress from "../../../assets/ip-adress.png";
-import dns from "../../../assets/dns.png";
+import {  addItemType } from "../../types/MainTypes";
+import { axiosClient } from "../../axiosClient";
+import ipaddress from "../../assets/ip-adress.png";
+import dns from "../../assets/dns.png";
 import axios from "axios";
-import { useUserContext } from "../../../Contexts/User-Context";
+import { useUserContext } from "../../Contexts/User-Context";
+import { useNavigate } from "react-router-dom";
 
-function AddItem({
-	setPageViewing,
-}: {
-	setPageViewing: (arg0: PageViewingType) => void;
-}) {
+function AddItem() {
 	const [formData, setFormData] = useState<addItemType>({
 		ipOrDns: "",
 		name: "",
@@ -18,6 +15,7 @@ function AddItem({
 		isIpOrDns: undefined,
 	});
 	const { userData } = useUserContext();
+	const navigation = useNavigate()
 
 	const handleIpOrDnsChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +53,7 @@ function AddItem({
 				userId: userData.userId,
 			});
 			alert(response.data.message);
-			setPageViewing("Dashboard");
+			navigation('/');
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				console.log(err);
@@ -65,7 +63,7 @@ function AddItem({
 	},[formData]);
 
 	return (
-		<div className=" w-full h-full flex justify-center items-start">
+		<div className=" mt-32 ml-36 w-full h-full flex justify-center items-start">
 			<div className="gap-4 w-96 h-96 bg-indigo-950/50 shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl">
 				<h1 className="text-2xl">add item</h1>
 				<form onSubmit={handleSubmit}>

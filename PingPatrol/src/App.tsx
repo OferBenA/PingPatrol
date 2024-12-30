@@ -7,7 +7,9 @@ import RegisterPage from "./pages/auth-pages/Register-page/RegisterPage";
 import "./App.css";
 // import { useEffect, useState } from "react";
 import AuthProvider from "./Contexts/Auth-Context";
-import HomePage from "./pages/logged-in-pages/HomePage/HomePage";
+import LeftNavBar from "./components/LeftNavBar/LeftNavBar";
+import Dashboard from "./pages/logged-in-pages/Dashboard";
+import AddItem from "./pages/logged-in-pages/AddItem";
 
 function App() {
 	const { userData } = useUserContext();
@@ -23,9 +25,10 @@ function App() {
 		<>
 			<AuthProvider>
 				<BrowserRouter>
+				<NavBar />
 					{!userData.isLoggedIn ? (
 						<>
-							<NavBar />
+
 							<Routes>
 								<Route path="/" element={<LoginPage />} />
 								<Route path="/login" element={<LoginPage />} />
@@ -35,9 +38,11 @@ function App() {
 						</>
 					) : (
 						<>
-						<NavBar />
+						<LeftNavBar/>
 						<Routes>
-							<Route path="/" element={<HomePage />} />
+							<Route path="/" element={<Dashboard />} />
+							<Route path="/addItem" element={<AddItem />} />
+							{/* <Route path="/Domain/:DomainName" element={<Domain />} /> */}
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 						</>

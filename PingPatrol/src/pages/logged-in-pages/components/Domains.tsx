@@ -1,15 +1,10 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { axiosClient } from "../../../../axiosClient";
-import deleteIcon from "../../../../assets/delete.svg";
-import emptyStarIcon from "../../../../assets/star.svg";
-import fillStarIcon from "../../../../assets/fillstar.svg";
+import { axiosClient } from "../../../axiosClient";
+import deleteIcon from "../../../assets/delete.svg";
+import emptyStarIcon from "../../../assets/star.svg";
+import fillStarIcon from "../../../assets/fillstar.svg";
+import { domainDataType } from "../../../types/MainTypes";
 
-type domainDataType = {
-	ipOrDns: string;
-	isFavorite: boolean;
-	name: string;
-	domainId: string;
-};
 function Domains() {
 	// const { userData } = useUserContext();
 	const [domainData, setDomainData] = useState<domainDataType[]>();
@@ -55,7 +50,7 @@ function Domains() {
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div
 						key={index}
-						className="hover:cursor-pointer min-w-48 w-fit bg-indigo-900 py-5 px-4 rounded-lg"
+						className="hover:cursor-pointer min-w-48 w-fit bg-blue-950 py-5 px-4 rounded-lg hover:shadow-2xl"
 					>
 						<h1 className="text-2xl">{domain.name}</h1>
 						<h1 className="text-lg">{domain.ipOrDns}</h1>
@@ -63,24 +58,24 @@ function Domains() {
 							{domain.isFavorite ? (
 								<img
 									onClick={() => handleFavorite(domain)}
-									title={`Remove from favorites`}
-									className="w-12  hover:animate-bounce hover:cursor-pointer p-1"
+									title='Remove from favorites &#11088;'
+									className="w-12  hover:animate-bounce hover:cursor-pointer p-1 drop-shadow-xl"
 									src={fillStarIcon}
 									alt="star"
 								/>
 							) : (
 								<img
 									onClick={() => handleFavorite(domain)}
-									title={`Add to favorites`}
-									className="w-12 hover:animate-bounce hover:cursor-pointer p-1"
+									title={`Add to favirites ⭐`}
+									className="w-12 hover:animate-bounce hover:cursor-pointer p-1 drop-shadow-xl"
 									src={emptyStarIcon}
 									alt="star"
 								/>
 							)}
 							<img
 								onClick={() => handleDelete(domain)}
-								title={`Delete Domain`}
-								className=" w-12 hover:animate-bounce hover:cursor-pointer p-1"
+								title={`Delete Domain 🗑`}
+								className=" w-12 hover:animate-bounce hover:cursor-pointer p-1 drop-shadow-xl"
 								src={deleteIcon}
 								alt="delete"
 							/>

@@ -27,3 +27,10 @@ export type formInput = {
     placeholder:string;
 }
 export type PageViewingType = 'Dashboard' | 'AddItem';
+
+export type domainDataType = {
+	ipOrDns: string;
+	isFavorite: boolean;
+	name: string;
+	domainId: string;
+};
