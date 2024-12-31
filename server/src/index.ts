@@ -6,8 +6,7 @@ import mongoose from "mongoose";
 import userRouter from "./controllers/users.router";
 import domainsRouter from "./controllers/domains.router";
 import { authMiddleware } from "./middlewares/authMiddleware";
-import ping from 'ping';
-import { DomainModel } from "./models/domain.model";
+import { clearDomainHistory, domainHistoryLogger} from "./services/DomainHistory.service";
 
 dotenv.config();
 
@@ -44,15 +43,11 @@ app.get(`/`, (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/domains", authMiddleware, domainsRouter);
 
-const domainLogger = async () => {
-	console.log(`hello world`);
-  const domains = await DomainModel.find();
-  console.log(domains)
 
 
-};
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
-	domainLogger();
+	domainHistoryLogger();
+	// clearDomainHistory()
 });

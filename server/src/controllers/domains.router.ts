@@ -10,7 +10,6 @@ const domainsRouter = express.Router();
 //if not in domain model: create new DomainModel and add is to the domains in UserModel
 domainsRouter.put("/create", async (req, res) => {
 	const { ipOrDns, name, isFavorite, isIpOrDns, userId } = req.body;
-	console.log(`entered create endpoint ${ipOrDns}`)
 	const domainId = uuidv4();
 
 	try {
@@ -20,7 +19,6 @@ domainsRouter.put("/create", async (req, res) => {
 
 			//the domain is already created in the domainModel, just need to update
 			if (domainAlreadyExist) {
-				console.log(domainAlreadyExist);
 				const domainAlreadyInUserModel = user.domains.some((domain) =>
 					domain.ipOrDns?.includes(ipOrDns)
 				);
@@ -120,7 +118,7 @@ domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
 		res.status(400).send("error changing domain details");
 		return;
 	}
-	console.log(domainId)
+	// console.log(domainId)
 	try {
 		const user = await UserModel.findOne({ userId: userId });
 		if(!user){
