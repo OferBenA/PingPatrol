@@ -81,7 +81,8 @@ domainsRouter.get("/allPerUser", async (req, res) => {
 		const domainIdArray = userData.domains.map(domain => domain.domainId)
 		//query the DomainModel for each of the user domain
 		const domainSpecificData = await DomainModel.find({'id': { $in: domainIdArray}})
-
+		//match the domain from DomainModel to UserModel and add 'lastUpdate' field to send to the front
+		//TODO - Make this more efficient, not O(n*m)
 		userData.domains.forEach(domain => {
 			const findDomain = domainSpecificData.find(domainData => domainData.id == domain.domainId)
 			if(findDomain){
