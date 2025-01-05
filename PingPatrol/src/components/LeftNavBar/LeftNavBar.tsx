@@ -22,7 +22,6 @@ function LeftNavBar() {
 					>
 						Add item
 					</div>
-					<div className="leftNavBarBtn">3</div>
 				</div>
         <div className="">
 				<div onClick={logout} className="leftNavBarBtn">Logout</div>

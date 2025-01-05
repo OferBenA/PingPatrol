@@ -33,4 +33,5 @@ export type domainDataType = {
 	isFavorite: boolean;
 	name: string;
 	domainId: string;
+	lastUpdate?: {alive: boolean, date: number}
 };

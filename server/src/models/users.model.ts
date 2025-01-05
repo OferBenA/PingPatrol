@@ -11,6 +11,7 @@ const userSchema = new Schema({
     isFavorite: Boolean,
     name: String,
     domainId: String,
+    lastUpdate: {type: { date: Number, alive: Boolean}}
   }]}
 });
 

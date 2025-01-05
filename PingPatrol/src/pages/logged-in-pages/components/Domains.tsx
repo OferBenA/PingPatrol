@@ -5,15 +5,15 @@ import emptyStarIcon from "../../../assets/star.svg";
 import fillStarIcon from "../../../assets/fillstar.svg";
 import { domainDataType } from "../../../types/MainTypes";
 import Skeleton from "./Skeleton/Skeleton";
-
+import StatusImg from "./statusImg";
 function Domains() {
 	// const { userData } = useUserContext();
-	const [domainData, setDomainData] = useState<domainDataType[] |null>();
+	const [domainData, setDomainData] = useState<domainDataType[] | null>();
 
 	const handleFavorite = useCallback(
 		async (domain: domainDataType) => {
 			domain.isFavorite = !domain.isFavorite;
-			setDomainData(null)
+			setDomainData(null);
 			await axiosClient.post(`/api/domains/updateDomainPerUser`, domain);
 			fetchData();
 		},
@@ -22,10 +22,14 @@ function Domains() {
 
 	const handleDelete = useCallback(
 		async (domain: domainDataType) => {
-			const affirm = confirm(`are you sure you want to delete ${domain.ipOrDns} ?`)
-			if(affirm){
-				setDomainData(null)
-				await axiosClient.delete(`/api/domains/deleteDomainPerUser/${domain.domainId}`);
+			const affirm = confirm(
+				`are you sure you want to delete ${domain.ipOrDns} ?`
+			);
+			if (affirm) {
+				setDomainData(null);
+				await axiosClient.delete(
+					`/api/domains/deleteDomainPerUser/${domain.domainId}`
+				);
 				fetchData();
 			}
 		},
@@ -47,12 +51,8 @@ function Domains() {
 		}
 	}, []);
 
-
-	if(!domainData){
-		return(
-
-			<Skeleton/>
-		)
+	if (!domainData) {
+		return <Skeleton />;
 	}
 	return (
 		<>
@@ -62,13 +62,14 @@ function Domains() {
 						key={index}
 						className="hover:cursor-pointer min-w-48 w-fit bg-blue-950 py-5 px-4 rounded-lg hover:shadow-2xl"
 					>
-						<h1 className="text-2xl">{domain.name}</h1>
+						<StatusImg status={domain?.lastUpdate?.alive} date={domain?.lastUpdate?.date}/>
+						<h1 className="text-2xl px-10">{domain.name}</h1>
 						<h1 className="text-lg">{domain.ipOrDns}</h1>
-						<div className=" mt-2 flex justify-between align-middle">
+						<div className=" mt-2 flex justify-between align-middle relative">
 							{domain.isFavorite ? (
 								<img
 									onClick={() => handleFavorite(domain)}
-									title='Remove from favorites &#11088;'
+									title="Remove from favorites &#11088;"
 									className="w-12  hover:animate-bounce hover:cursor-pointer p-1 drop-shadow-xl"
 									src={fillStarIcon}
 									alt="star"

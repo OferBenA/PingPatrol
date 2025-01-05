@@ -67,6 +67,8 @@ domainsRouter.put("/create", async (req, res) => {
 	}
 });
 
+//get userData from userId, get all the domain hes registered to, query the DomainModel for the status for each domain,
+//
 domainsRouter.get("/allPerUser", async (req, res) => {
 	const { userId } = (req as any).userData;
 	try {
@@ -75,12 +77,25 @@ domainsRouter.get("/allPerUser", async (req, res) => {
 			res.status(400).send("Error finding the user in the DataBase");
 			return;
 		}
+		//get all the domain hes registered to
+		const domainIdArray = userData.domains.map(domain => domain.domainId)
+		//query the DomainModel for each of the user domain
+		const domainSpecificData = await DomainModel.find({'id': { $in: domainIdArray}})
+
+		userData.domains.forEach(domain => {
+			const findDomain = domainSpecificData.find(domainData => domainData.id == domain.domainId)
+			if(findDomain){
+				const lastUpdate = findDomain.history[findDomain.history.length -1];
+				domain.lastUpdate = lastUpdate ?? null;
+			}
+		})
 		res.status(200).json(userData.domains);
 	} catch (error) {
 		console.error("Error finding user in the db: ", error);
 		res.status(500).send("Error finding user in DB.");
 	}
 });
+
 domainsRouter.post("/updateDomainPerUser", async (req, res) => {
 	const { userId } = (req as any).userData;
 	const domainToUpdate = req.body;
@@ -142,5 +157,8 @@ domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
 		console.error(`error accrued while trying to change a user ${error}`)
 	}
 })
+
+
+
 
 export default domainsRouter;

@@ -76,7 +76,7 @@ function AddItem() {
 							type="text"
 							placeholder="ip \ dns"
 							required
-							maxLength={40}
+							maxLength={90}
 							value={formData.ipOrDns}
 							onChange={handleIpOrDnsChange}
 						/>
