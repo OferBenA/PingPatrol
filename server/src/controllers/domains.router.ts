@@ -91,6 +91,7 @@ domainsRouter.get("/allPerUser", async (req, res) => {
 			}
 		})
 		res.status(200).json(userData.domains);
+
 	} catch (error) {
 		console.error("Error finding user in the db: ", error);
 		res.status(500).send("Error finding user in DB.");

@@ -10,6 +10,7 @@ import AuthProvider from "./Contexts/Auth-Context";
 import LeftNavBar from "./components/LeftNavBar/LeftNavBar";
 import Dashboard from "./pages/logged-in-pages/Dashboard";
 import AddItem from "./pages/logged-in-pages/AddItem";
+import DomianDetails from "./pages/logged-in-pages/DomianDetails";
 
 function App() {
 	const { userData } = useUserContext();
@@ -42,7 +43,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Dashboard />} />
 							<Route path="/addItem" element={<AddItem />} />
-							{/* <Route path="/Domain/:DomainName" element={<Domain />} /> */}
+							<Route path="/domiandetails/:domain" element={<DomianDetails />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 						</>

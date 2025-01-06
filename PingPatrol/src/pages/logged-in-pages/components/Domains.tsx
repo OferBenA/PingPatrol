@@ -5,9 +5,9 @@ import emptyStarIcon from "../../../assets/star.svg";
 import fillStarIcon from "../../../assets/fillstar.svg";
 import { domainDataType } from "../../../types/MainTypes";
 import Skeleton from "./Skeleton/Skeleton";
-import StatusImg from "./statusImg";
+import StatusImg from "./StatusImg";
+
 function Domains() {
-	// const { userData } = useUserContext();
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
 
 	const handleFavorite = useCallback(
