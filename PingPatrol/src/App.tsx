@@ -10,8 +10,7 @@ import AuthProvider from "./Contexts/Auth-Context";
 import LeftNavBar from "./components/LeftNavBar/LeftNavBar";
 import Dashboard from "./pages/logged-in-pages/Dashboard";
 import AddItem from "./pages/logged-in-pages/AddItem";
-import DomianDetails from "./pages/logged-in-pages/DomianDetails";
-
+import DomainDetails from "./pages/logged-in-pages/DomainDetails";
 function App() {
 	const { userData } = useUserContext();
 	// const [isLoggedIn, setIsLoggedIn] = useState(
@@ -43,7 +42,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Dashboard />} />
 							<Route path="/addItem" element={<AddItem />} />
-							<Route path="/domiandetails/:domain" element={<DomianDetails />} />
+							<Route path="/domiandetails/:domain" element={<DomainDetails />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 						</>

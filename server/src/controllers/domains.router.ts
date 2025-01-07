@@ -44,31 +44,52 @@ domainsRouter.put("/create", async (req, res) => {
 					isIpOrDns: isIpOrDns == "ip" ? "ip" : "dns",
 					domain: ipOrDns,
 				});
-				 user.domains.push({
+				user.domains.push({
 					ipOrDns,
 					isFavorite,
 					name,
 					domainId: domainId,
 				});
 				await user.save();
-				res
-					.status(201)
-					.json({
-						message: "domain created successfully and added to the user!",
-						domainId,
-					});
+				res.status(201).json({
+					message: "domain created successfully and added to the user!",
+					domainId,
+				});
 			}
 			return;
 		}
 		res.status(403).send("not able to add domain is forbidden!");
 	} catch (error) {
 		console.error("Error creating a domain in the db: ", error);
-		res.status(500).send("Error uploading new domain.");
+		res.status(500).send("Error creating new domain.");
 	}
 });
 
-//get userData from userId, get all the domain hes registered to, query the DomainModel for the status for each domain,
-//
+domainsRouter.get("/domainDetails/:domain", async (req, res) => {
+	const { domain } = req.params;
+	console.log(domain);
+
+	try {
+		const domainToRes = await DomainModel.findOne({ domain: domain });
+
+		if (!domainToRes) {
+			res.status(404).json({ message: "domain not found" });
+			return;
+		}
+
+		console.log(domainToRes);
+		res.json({
+			history: domainToRes.history,
+			createdDate: domainToRes.createdDate,
+			domain: domainToRes.domain,
+			isIpOrDns: domainToRes.isIpOrDns,
+		});
+		return;
+	} catch (error) {
+		console.error("Error finding domain in the db: ", error);
+		res.status(500).send("Error finding domain in DB.");
+	}
+});
 domainsRouter.get("/allPerUser", async (req, res) => {
 	const { userId } = (req as any).userData;
 	try {
@@ -78,20 +99,23 @@ domainsRouter.get("/allPerUser", async (req, res) => {
 			return;
 		}
 		//get all the domain hes registered to
-		const domainIdArray = userData.domains.map(domain => domain.domainId)
+		const domainIdArray = userData.domains.map((domain) => domain.domainId);
 		//query the DomainModel for each of the user domain
-		const domainSpecificData = await DomainModel.find({'id': { $in: domainIdArray}})
+		const domainSpecificData = await DomainModel.find({
+			id: { $in: domainIdArray },
+		});
 		//match the domain from DomainModel to UserModel and add 'lastUpdate' field to send to the front
 		//TODO - Make this more efficient, not O(n*m)
-		userData.domains.forEach(domain => {
-			const findDomain = domainSpecificData.find(domainData => domainData.id == domain.domainId)
-			if(findDomain){
-				const lastUpdate = findDomain.history[findDomain.history.length -1];
+		userData.domains.forEach((domain) => {
+			const findDomain = domainSpecificData.find(
+				(domainData) => domainData.id == domain.domainId
+			);
+			if (findDomain) {
+				const lastUpdate = findDomain.history[findDomain.history.length - 1];
 				domain.lastUpdate = lastUpdate ?? null;
 			}
-		})
+		});
 		res.status(200).json(userData.domains);
-
 	} catch (error) {
 		console.error("Error finding user in the db: ", error);
 		res.status(500).send("Error finding user in DB.");
@@ -107,7 +131,7 @@ domainsRouter.post("/updateDomainPerUser", async (req, res) => {
 	}
 	try {
 		const user = await UserModel.findOne({ userId: userId });
-		if(!user){
+		if (!user) {
 			res.status(400).send("error finding user");
 			return;
 		}
@@ -125,12 +149,12 @@ domainsRouter.post("/updateDomainPerUser", async (req, res) => {
 		res.send(`user changed successfully`);
 		return;
 	} catch (error) {
-		console.error(`error accrued while trying to change a user ${error}`)
+		console.error(`error accrued while trying to change a user ${error}`);
 	}
 });
-domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
+domainsRouter.delete("/deleteDomainPerUser/:domainId", async (req, res) => {
 	const { userId } = (req as any).userData;
-	const {domainId} = req.params;
+	const { domainId } = req.params;
 	if (!domainId) {
 		res.status(400).send("error changing domain details");
 		return;
@@ -138,7 +162,7 @@ domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
 	// console.log(domainId)
 	try {
 		const user = await UserModel.findOne({ userId: userId });
-		if(!user){
+		if (!user) {
 			res.status(400).send("error finding user");
 			return;
 		}
@@ -151,16 +175,12 @@ domainsRouter.delete("/deleteDomainPerUser/:domainId",async (req,res) =>{
 		}
 		user?.domains.splice(indexToDelete, 1);
 
-
 		await user?.save();
 		res.send(`domain in user deleted successfully`);
 		return;
 	} catch (error) {
-		console.error(`error accrued while trying to change a user ${error}`)
+		console.error(`error accrued while trying to change a user ${error}`);
 	}
-})
-
-
-
+});
 
 export default domainsRouter;

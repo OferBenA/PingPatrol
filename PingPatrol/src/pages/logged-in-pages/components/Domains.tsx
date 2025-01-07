@@ -37,9 +37,13 @@ function Domains() {
 	);
 
 	const fetchData = useCallback(async () => {
-		const data = await axiosClient.get(`/api/domains/allPerUser`);
-		if (data) {
-			setDomainData(data.data);
+		try {
+			const data = await axiosClient.get(`/api/domains/allPerUser`);
+			if (data) {
+				setDomainData(data.data);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}, [domainData]);
 
@@ -62,7 +66,10 @@ function Domains() {
 						key={index}
 						className="hover:cursor-pointer min-w-48 w-fit bg-blue-950 py-5 px-4 rounded-lg hover:shadow-2xl"
 					>
-						<StatusImg status={domain?.lastUpdate?.alive} date={domain?.lastUpdate?.date}/>
+						<StatusImg
+							status={domain?.lastUpdate?.alive}
+							date={domain?.lastUpdate?.date}
+						/>
 						<h1 className="text-2xl px-10">{domain.name}</h1>
 						<h1 className="text-lg">{domain.ipOrDns}</h1>
 						<div className=" mt-2 flex justify-between align-middle relative">
