@@ -1,6 +1,6 @@
-import './Skeleton.css'
+import './DomainListSkeletons.css';
 
-function Skeleton() {
+function DomainListSkeletons() {
 	return (
 		<div className="flex justify-center gap-5 align-top flex-wrap">
 			<div className="skeleton">
@@ -99,4 +99,4 @@ function Skeleton() {
 	);
 }
 
-export default Skeleton;
+export default DomainListSkeletons;

@@ -4,11 +4,12 @@ import deleteIcon from "../../../assets/delete.svg";
 import emptyStarIcon from "../../../assets/star.svg";
 import fillStarIcon from "../../../assets/fillstar.svg";
 import { domainDataType } from "../../../types/MainTypes";
-import Skeleton from "./Skeleton/Skeleton";
 import StatusImg from "./StatusImg";
-
+import { useNavigate } from "react-router-dom";
+import DomainListSkeletons from "./Skeletons/DomainListSkeletons/DomainListSkeletons";
 function Domains() {
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
+	const navigate = useNavigate()
 
 	const handleFavorite = useCallback(
 		async (domain: domainDataType) => {
@@ -56,7 +57,7 @@ function Domains() {
 	}, []);
 
 	if (!domainData) {
-		return <Skeleton />;
+		return <DomainListSkeletons />;
 	}
 	return (
 		<>
@@ -64,7 +65,7 @@ function Domains() {
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div
 						key={index}
-						className="hover:cursor-pointer min-w-48 w-fit bg-blue-950 py-5 px-4 rounded-lg hover:shadow-2xl"
+						className="hover:cursor-pointer min-w-48 w-fit bg-[rgb(54,42,65)] py-5 px-4 rounded-lg hover:shadow-2xl"
 					>
 						<StatusImg
 							status={domain?.lastUpdate?.alive}
@@ -98,6 +99,7 @@ function Domains() {
 								alt="delete"
 							/>
 						</div>
+						<button onClick={() =>navigate(`/domainDetails/${domain.ipOrDns}`)} className="bg-slate-400 mt-4 pr-2">more details <span className="hover:animate-bounce">→</span></button>
 					</div>
 				))}
 			</div>

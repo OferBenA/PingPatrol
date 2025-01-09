@@ -1,50 +1,56 @@
-import  { memo, useCallback, useEffect, useState } from 'react'
-import { axiosClient } from '../../axiosClient';
+import { memo, useCallback, useEffect, useState } from "react";
+import { axiosClient } from "../../axiosClient";
+import DomainDetailsSkeletons from "./components/Skeletons/domainDetailsSkeletons/domainDetailsSkeletons";
+import arrowUp from "../../assets/arrow_up.svg";
+import arrowDown from "../../assets/arrow_down.svg";
+import sync from "../../assets/sync.svg";
+import { ReceivedDomainDataType } from "../../types/MainTypes";
+import StatusImg from "./components/StatusImg";
 
 function DomainDetails() {
-	const [domainData , setDomainData ] = useState()
+	const [domainData, setDomainData] = useState<ReceivedDomainDataType>();
 
-	const pathParts = window.location.pathname.split('/');
-	const relevantDomainUrl = pathParts[pathParts.length-1];
+	const pathParts = window.location.pathname.split("/");
+	const relevantDomainUrl = pathParts[pathParts.length - 1];
 
 	const fetchDomainData = useCallback(async () => {
 		try {
-			const data = await axiosClient.get(`/api/domains/domainDetails/${relevantDomainUrl}`);
+			const data = await axiosClient.get(
+				`/api/domains/domainDetails/${relevantDomainUrl}`
+			);
 			if (data) {
-				console.log(data.data)
+				console.log(data.data);
 				setDomainData(data.data);
 			}
-
 		} catch (error) {
-			console.error(error)
-
+			console.error(error);
 		}
 	}, []);
 
-	useEffect(() =>{
-		fetchDomainData()
-
-	},[])
-	if(!domainData){
-		return (
-			<div className="mt-32 ml-36 w-10/12 h-[calc(100vh-140px)]">
-			<h1 className="text-6xl mb-5">{relevantDomainUrl}</h1>
-			<div className="flex justify-center flex-wrap gap-4 align-top">
-			<h1 className='text-4xl'>404 Domain not found!</h1>
-
-			</div>
-		</div>
-		)
+	useEffect(() => {
+		fetchDomainData();
+	}, []);
+	if (!domainData) {
+		return <DomainDetailsSkeletons />;
 	}
 	return (
-		<div className="mt-32 ml-36 w-10/12 h-[calc(100vh-140px)]">
-			<h1 className="text-4xl mb-5">{relevantDomainUrl}</h1>
-			<div className="flex justify-center flex-wrap gap-4 align-top">
-
+		<div className=" pt-20 px-5 mt-32 ml-36 min-h-[600px] min-w-[600px] rounded-3xl bg-[rgb(54,42,65)]">
+			<h1 className="text-5xl mb-5">{domainData.domain}</h1>
+			<div className="w-full flex justify-center align-middle pb-5">
+				{domainData.lastUpdate.alive && (
+					<img className="w-20" src={arrowUp} alt="arrowUp" />
+				)}
+				{domainData.lastUpdate.alive == false && (
+					<img className="w-20" src={arrowDown} alt="arrowDown" />
+				)}
+				{domainData.lastUpdate.alive ==undefined &&
+				<img className="w-20" src={sync} alt="sync" />}
 
 			</div>
+
+			<div className="flex justify-center flex-wrap gap-4 align-top">123</div>
 		</div>
-	)
+	);
 }
 
-export default memo(DomainDetails)
+export default memo(DomainDetails);

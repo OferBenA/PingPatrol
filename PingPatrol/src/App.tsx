@@ -25,10 +25,9 @@ function App() {
 		<>
 			<AuthProvider>
 				<BrowserRouter>
-				<NavBar />
+					<NavBar />
 					{!userData.isLoggedIn ? (
 						<>
-
 							<Routes>
 								<Route path="/" element={<LoginPage />} />
 								<Route path="/login" element={<LoginPage />} />
@@ -38,13 +37,16 @@ function App() {
 						</>
 					) : (
 						<>
-						<LeftNavBar/>
-						<Routes>
-							<Route path="/" element={<Dashboard />} />
-							<Route path="/addItem" element={<AddItem />} />
-							<Route path="/domiandetails/:domain" element={<DomainDetails />} />
-							<Route path="*" element={<NotFound />} />
-						</Routes>
+							<LeftNavBar />
+							<Routes>
+								<Route path="/" element={<Dashboard />} />
+								<Route path="/addItem" element={<AddItem />} />
+								<Route
+									path="/domaindetails/:domain"
+									element={<DomainDetails />}
+								/>
+								<Route path="*" element={<NotFound />} />
+							</Routes>
 						</>
 					)}
 				</BrowserRouter>

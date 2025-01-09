@@ -80,6 +80,7 @@ domainsRouter.get("/domainDetails/:domain", async (req, res) => {
 		console.log(domainToRes);
 		res.json({
 			history: domainToRes.history,
+			lastUpdate:domainToRes.history[domainToRes.history.length-1],
 			createdDate: domainToRes.createdDate,
 			domain: domainToRes.domain,
 			isIpOrDns: domainToRes.isIpOrDns,

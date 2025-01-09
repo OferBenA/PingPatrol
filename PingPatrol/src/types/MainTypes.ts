@@ -35,3 +35,11 @@ export type domainDataType = {
 	domainId: string;
 	lastUpdate?: {alive: boolean, date: number}
 };
+export type ReceivedDomainDataType = {
+	domain:string;
+	id: string;
+	createdDate: string;
+	isIpOrDns: string;
+	history: { date: number; alive: boolean }[];
+	lastUpdate: { date: number; alive: boolean };
+};

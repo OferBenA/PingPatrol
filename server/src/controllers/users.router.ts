@@ -14,12 +14,8 @@ usersRouter.put("/register", async (req, res) => {
 	});
 	// res.status(200).send('test!');
 	if (user) {
-		if (user.userName == userName) {
-			res.status(400).send("username already in use");
-			return;
-		}
-		if (user.email == email) {
-			res.status(400).send("email already in use");
+		if (user.userName == userName || user.email == email) {
+			res.status(400).send("Username or Email are already in use");
 			return;
 		}
 	}
@@ -45,7 +41,7 @@ usersRouter.post(
 		if (emailOrUsername.includes("@")) {
 			user = await UserModel.findOne({ email: emailOrUsername, password });
 		} else {
-			user = await UserModel.findOne({ username: emailOrUsername, password });
+			user = await UserModel.findOne({ userName: emailOrUsername, password });
 		}
 		if(user){
 			const payload = { email: user.email, userId: user.userId, username: user.userName };
@@ -58,8 +54,6 @@ usersRouter.post(
 			return;
 		}
 		res.status(404).send(`bad combination of email and password`)
-		// console.log(req.body)
-		// res.send('asdasd')
 	}
 );
 usersRouter.get('/token', (req, res) => {
