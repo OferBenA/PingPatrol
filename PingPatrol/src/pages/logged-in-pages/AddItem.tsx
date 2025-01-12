@@ -64,7 +64,7 @@ function AddItem() {
 
 	return (
 		<div className=" mt-32 ml-36 w-full h-full flex justify-center items-start">
-			<div className="gap-4 w-96 h-96 bg-indigo-950/50 shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl">
+			<div className="gap-4 w-96 h-96 bg-[#2d3535] shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl">
 				<h1 className="text-2xl">add item</h1>
 				<form onSubmit={handleSubmit}>
 					<span>ip \ dns address: </span>

@@ -13,7 +13,7 @@
     padding: 10px;
 
     cursor: progress;
-    background-color: rgb(54,42,65);
+    background-color: #2d3535;
     border-radius: 15px;
     .skeleton-img {
         margin-top: 10px;

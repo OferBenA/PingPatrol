@@ -65,7 +65,7 @@ function Domains() {
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div
 						key={index}
-						className="hover:cursor-pointer min-w-48 w-fit bg-[rgb(54,42,65)] py-5 px-4 rounded-lg hover:shadow-2xl"
+						className="hover:cursor-pointer min-w-48 w-fit bg-[#2d3535] py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300"
 					>
 						<StatusImg
 							status={domain?.lastUpdate?.alive}

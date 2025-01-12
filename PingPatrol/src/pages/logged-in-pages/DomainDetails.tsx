@@ -3,10 +3,8 @@ import { axiosClient } from "../../axiosClient";
 import DomainDetailsSkeletons from "./components/Skeletons/domainDetailsSkeletons/domainDetailsSkeletons";
 import arrowUp from "../../assets/arrow_up.svg";
 import arrowDown from "../../assets/arrow_down.svg";
-import sync from "../../assets/sync.svg";
 import { ReceivedDomainDataType } from "../../types/MainTypes";
-import StatusImg from "./components/StatusImg";
-
+import DomainDetailsSyncing from "./components/DomainDetailsSyncing";
 function DomainDetails() {
 	const [domainData, setDomainData] = useState<ReceivedDomainDataType>();
 
@@ -33,8 +31,11 @@ function DomainDetails() {
 	if (!domainData) {
 		return <DomainDetailsSkeletons />;
 	}
+	if (!domainData.lastUpdate) {
+		return <DomainDetailsSyncing domain={domainData.domain}/>;
+	}
 	return (
-		<div className=" pt-20 px-5 mt-32 ml-36 min-h-[600px] min-w-[600px] rounded-3xl bg-[rgb(54,42,65)]">
+		<div className=" pt-20 p-8 mt-32 ml-36 min-h-[600px] min-w-[500px] max-w-[calc(80vw-300px)] rounded-3xl bg-[#2d3535] shadow-[10px_10px_20px_20px_rgba(0,0,0,0.5)]">
 			<h1 className="text-5xl mb-5">{domainData.domain}</h1>
 			<div className="w-full flex justify-center align-middle pb-5">
 				{domainData.lastUpdate.alive && (
@@ -43,9 +44,6 @@ function DomainDetails() {
 				{domainData.lastUpdate.alive == false && (
 					<img className="w-20" src={arrowDown} alt="arrowDown" />
 				)}
-				{domainData.lastUpdate.alive ==undefined &&
-				<img className="w-20" src={sync} alt="sync" />}
-
 			</div>
 
 			<div className="flex justify-center flex-wrap gap-4 align-top">123</div>
