@@ -67,7 +67,6 @@ domainsRouter.put("/create", async (req, res) => {
 
 domainsRouter.get("/domainDetails/:domain", async (req, res) => {
 	const { domain } = req.params;
-	console.log(domain);
 
 	try {
 		const domainToRes = await DomainModel.findOne({ domain: domain });
@@ -77,10 +76,9 @@ domainsRouter.get("/domainDetails/:domain", async (req, res) => {
 			return;
 		}
 
-		console.log(domainToRes);
 		res.json({
 			history: domainToRes.history,
-			lastUpdate:domainToRes.history[domainToRes.history.length-1],
+			lastUpdate: domainToRes.history[domainToRes.history.length - 1],
 			createdDate: domainToRes.createdDate,
 			domain: domainToRes.domain,
 			isIpOrDns: domainToRes.isIpOrDns,
@@ -113,7 +111,9 @@ domainsRouter.get("/allPerUser", async (req, res) => {
 			);
 			if (findDomain) {
 				const lastUpdate = findDomain.history[findDomain.history.length - 1];
-				domain.lastUpdate = lastUpdate ?? null;
+				if (lastUpdate) {
+					domain.lastUpdate = lastUpdate;
+				}
 			}
 		});
 		res.status(200).json(userData.domains);

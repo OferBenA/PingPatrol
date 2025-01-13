@@ -5,7 +5,7 @@ const domainSchema = new Schema({
 	id: { type: String },
 	createdDate: { type: Date },
 	isIpOrDns: { type: String },
-	history: { type: [{ date: Number, alive: Boolean }] },
+	history: { type: [{ alive: Boolean ,startCurrentStatus: Number,endCurrentStatus: Number }] },
 });
 
 export const DomainModel = model("domainModel", domainSchema);

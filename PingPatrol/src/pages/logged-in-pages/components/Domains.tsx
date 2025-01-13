@@ -67,10 +67,7 @@ function Domains() {
 						key={index}
 						className="hover:cursor-pointer min-w-48 w-fit bg-[#2d3535] py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300"
 					>
-						<StatusImg
-							status={domain?.lastUpdate?.alive}
-							date={domain?.lastUpdate?.date}
-						/>
+						<StatusImg lastUpdate={domain.lastUpdate} />
 						<h1 className="text-2xl px-10">{domain.name}</h1>
 						<h1 className="text-lg">{domain.ipOrDns}</h1>
 						<div className=" mt-2 flex justify-between align-middle relative">

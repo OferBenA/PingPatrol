@@ -17,29 +17,34 @@ export type LoginInfoType = {
 export type addItemType = {
 	ipOrDns: string;
 	name: string;
-	favorite:boolean;
-	isIpOrDns: 'ip' | 'dns' | undefined
+	favorite: boolean;
+	isIpOrDns: "ip" | "dns" | undefined;
 };
 export type formInput = {
-    name:string;
-    type:string;
-    value:string;
-    placeholder:string;
-}
-export type PageViewingType = 'Dashboard' | 'AddItem';
+	name: string;
+	type: string;
+	value: string;
+	placeholder: string;
+};
+export type PageViewingType = "Dashboard" | "AddItem";
 
+export type lastUpdateType = {
+	alive: boolean;
+	startCurrentStatus: number;
+	endCurrentStatus: number;
+};
 export type domainDataType = {
 	ipOrDns: string;
 	isFavorite: boolean;
 	name: string;
 	domainId: string;
-	lastUpdate?: {alive: boolean, date: number}
+	lastUpdate: lastUpdateType;
 };
 export type ReceivedDomainDataType = {
-	domain:string;
+	domain: string;
 	id: string;
 	createdDate: string;
 	isIpOrDns: string;
 	history: { date: number; alive: boolean }[];
-	lastUpdate: { date: number; alive: boolean };
+	lastUpdate: lastUpdateType;
 };
