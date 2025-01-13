@@ -5,7 +5,7 @@ import syncStatus from "../../../assets/sync.svg";
 import {  lastUpdateType } from "../../../types/MainTypes";
 
 function StatusImg({lastUpdate}: {lastUpdate: lastUpdateType}) {
-	if (lastUpdate.alive == true && lastUpdate.endCurrentStatus)
+	if (lastUpdate?.alive == true && lastUpdate?.endCurrentStatus){
 		return (
 			<img
 				src={upStatus}
@@ -14,15 +14,17 @@ function StatusImg({lastUpdate}: {lastUpdate: lastUpdateType}) {
 				title={`true to: ${new Date(lastUpdate.endCurrentStatus)}`}
 			/>
 		);
-	else if (!lastUpdate.alive && lastUpdate.endCurrentStatus)
+	}
+	else if (!lastUpdate?.alive && lastUpdate?.endCurrentStatus){
 		return (
 			<img
 				src={downStatus}
 				className="absolute w-8"
 				alt="status"
-				title={`true to: ${new Date(lastUpdate.endCurrentStatus)}`}
+				title={`true to: ${new Date(lastUpdate?.endCurrentStatus)}`}
 			/>
 		);
+	}
 	else {
 		return (
 			<img
