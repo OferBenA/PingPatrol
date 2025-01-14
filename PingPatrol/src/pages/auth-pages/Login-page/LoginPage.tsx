@@ -8,6 +8,7 @@ import { parseJwt } from "../../../services/utils.service";
 import { useUserContext } from "../../../Contexts/User-Context";
 import "./LoginPage.css";
 import { axiosClient } from "../../../axiosClient";
+import { useThemeStore } from "../../../Store/useTheme";
 
 function LoginPage() {
 	const [formData, setFormData] = useState<LoginInfoType>({
@@ -17,6 +18,7 @@ function LoginPage() {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const { dispatch: dispatchUserData } = useUserContext();
 	const navigate = useNavigate();
+	const theme = useThemeStore((state) => state.theme)
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -56,8 +58,8 @@ function LoginPage() {
 	};
 
 	return (
-		<div className="LoginPage">
-			<div className="login-div">
+		<div className={`LoginPage ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#BCCCDC] text-black'}`}>
+			<div className={`login-div ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#FBFBFB] text-black'}`}>
 				<h2>Login</h2>
 				<form onSubmit={handleSubmit}>
 					<span>email \ username </span>
@@ -65,7 +67,7 @@ function LoginPage() {
 						<br />
 						<input
 							onChange={handleChange}
-							className="formInput"
+							className={`formInput text-white rounded-md`}
 							name="emailOrUsername"
 							type="text"
 							value={formData.emailOrUsername}
@@ -78,7 +80,7 @@ function LoginPage() {
 						<br />
 						<input
 							onChange={handleChange}
-							className="formInput"
+							className={`formInput text-white rounded-md`}
 							name="password"
 							type={isVisible ? "text" : "password"}
 							value={formData.password}

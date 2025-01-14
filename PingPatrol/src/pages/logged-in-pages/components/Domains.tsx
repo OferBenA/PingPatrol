@@ -7,9 +7,11 @@ import { domainDataType } from "../../../types/MainTypes";
 import StatusImg from "./StatusImg";
 import { useNavigate } from "react-router-dom";
 import DomainListSkeletons from "./Skeletons/DomainListSkeletons/DomainListSkeletons";
+import { useThemeStore } from "../../../Store/useTheme";
 function Domains() {
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
 	const navigate = useNavigate();
+	const theme = useThemeStore((state) => state.theme)
 
 	const handleFavorite = useCallback(
 		async (domain: domainDataType) => {
@@ -72,7 +74,7 @@ function Domains() {
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div
 						key={index}
-						className="hover:cursor-pointer min-w-48 w-fit bg-[#2d3535] py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300"
+						className={`hover:cursor-pointer min-w-48 w-fit bg-[#2d3535] py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300 ${theme == 'dark' ? 'bg-[#2d3535] text-white': 'bg-[#FBFBFB] text-black'}`}
 					>
 						<StatusImg lastUpdate={domain.lastUpdate} />
 						<h1 className="text-2xl px-10">{domain.name}</h1>

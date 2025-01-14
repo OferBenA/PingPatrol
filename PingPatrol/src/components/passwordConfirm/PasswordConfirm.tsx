@@ -5,6 +5,7 @@ import checkPass from "../../assets/check.svg";
 import checkfails from "../../assets/error.svg";
 import { PasswordValidation, ResterUserType } from "../../types/MainTypes";
 import { specialCharacters } from './../../services/utils.service';
+import { useThemeStore } from "../../Store/useTheme";
 
 
 function PasswordConfirm({
@@ -28,6 +29,7 @@ function PasswordConfirm({
 	// 		doesPassContainSpceialChar: false,
 	// 		doesPassMatch: false,
 	// 	});
+	const theme = useThemeStore((state) => state.theme)
 
 	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const password = e.target.value;
@@ -120,7 +122,7 @@ function PasswordConfirm({
 				<br /> {/* aligns the password input with all the other inputs*/}
 				<input
 					onChange={handlePasswordChange}
-					className="formInput"
+					className={`formInput text-white`}
 					name="password"
 					type={isVisible ? "text" : "password"}
 					value={formData.password}
@@ -144,7 +146,7 @@ function PasswordConfirm({
 				<br /> {/* aligns the password input with all the other inputs*/}
 				<input
 					onChange={handleConfirmPasswordChange}
-					className="formInput"
+					className={`formInput text-white`}
 					name="confirmPassword"
 					type={isVisible ? "text" : "password"}
 					value={formData.confirmPassword}
@@ -168,7 +170,7 @@ function PasswordConfirm({
 				/>
 			</label>
 			{ispasswordValidationShown && (
-				<div className="password-validation">
+				<div className={`password-validation ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#BCCCDC] text-slate-700'}`}>
 					<ul>
 						<div className="li-div">
 							<li>password length must be at least 8 characters </li>

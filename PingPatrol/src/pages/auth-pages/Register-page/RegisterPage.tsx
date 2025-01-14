@@ -4,6 +4,7 @@ import "./RegisterPage.css";
 import PasswordConfirm from "../../../components/passwordConfirm/PasswordConfirm";
 import { PasswordValidation, ResterUserType } from "../../../types/MainTypes";
 import axios, { AxiosError } from "axios";
+import { useThemeStore } from "../../../Store/useTheme";
 
 function RegisterPage() {
 	const [formData, setFormData] = useState<ResterUserType>({
@@ -20,6 +21,8 @@ function RegisterPage() {
 			doesPassMatch: false,
 		});
 	const navigate = useNavigate();
+	const theme = useThemeStore((state) => state.theme)
+
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -76,15 +79,15 @@ function RegisterPage() {
 		}
 	};
 	return (
-		<div className="RegisterPage">
-			<div className="register-div">
+		<div className={`RegisterPage ${theme == 'dark' ? 'bg-[#1a2222]': 'bg-[#BCCCDC]'}`}>
+			<div className={`register-div ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#FBFBFB] text-black'}`}>
 				<h2>Register</h2>
 				<form onSubmit={handleSubmit}>
 					<p>email </p>
 					<label className="username-label">
 						<input
 							onChange={handleChange}
-							className="formInput"
+							className={`formInput text-white`}
 							name="email"
 							type="email"
 							value={formData.email}
@@ -95,7 +98,7 @@ function RegisterPage() {
 					<label className="username-label">
 						<input
 							onChange={handleChange}
-							className="formInput"
+							className={`formInput text-white`}
 							name="userName"
 							type="text"
 							value={formData.userName}
@@ -111,7 +114,7 @@ function RegisterPage() {
 						passwordValidation={passwordValidation}
 						setPasswordValidation={setPasswordValidation}
 					/>
-					<input className="button input-submit" type="submit" value="Register" />
+					<input className={`button  bg-[#1a2222]`} type="submit" value="Register" />
 				</form>
 				<p className="dont-have-acc">Already have an account? </p>
 				<Link to={"/login"} className='text-indigo-400'>login</Link>

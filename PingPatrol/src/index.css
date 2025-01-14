@@ -4,14 +4,14 @@
 @tailwind utilities;
 
 :root {
-  --dark-text-color: rgb(3, 3, 3);
-  --main-components-color: rgba(255, 255, 255, 0.87);
+  /* --dark-text-color: rgb(3, 3, 3);
+  --main-components-color: rgba(255, 255, 255, 0.87); */
   font-family: Satoshi-Regular, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   box-sizing: border-box;
   color-scheme: light dark;
-  color: var(--main-components-color);
-  background-color: #1a2222;
+  /* color: var(--main-components-color); */
+  /* background-color: #1a2222; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

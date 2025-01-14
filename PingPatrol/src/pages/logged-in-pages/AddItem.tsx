@@ -4,6 +4,7 @@ import { axiosClient } from "../../axiosClient";
 import axios from "axios";
 import { useUserContext } from "../../Contexts/User-Context";
 import { useNavigate } from "react-router-dom";
+import { useThemeStore } from "../../Store/useTheme";
 
 function AddItem() {
 	const [formData, setFormData] = useState<addItemType>({
@@ -14,6 +15,8 @@ function AddItem() {
 	const [isIpErrors, setIsIpErrors] = useState([true, true, true, true]);
 	const { userData } = useUserContext();
 	const navigation = useNavigate();
+		const theme = useThemeStore((state) => state.theme)
+
 
 	const handleCheckedChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +56,6 @@ function AddItem() {
 					isFavorite: formData.favorite,
 					userId: userData.userId,
 				});
-				console.log(formData.ipAddr.join("."));
-				console.log(response);
 				alert(response.data.message);
 				navigation("/");
 			} catch (err: unknown) {
@@ -68,13 +69,13 @@ function AddItem() {
 	);
 
 	return (
-		<div className=" mt-32 ml-36 w-full h-full flex justify-center items-start">
-			<div className="gap-4 w-96 h-96 bg-[#2d3535] shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl">
+		<div className={`pt-48 pl-36 w-screen min-h-screen flex justify-center items-start ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#BCCCDC] text-slate-700'}`}>
+			<div className={`gap-4 w-96 h-96 shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl ${theme == 'dark' ? 'bg-[#2d3535] text-white': 'bg-[#FBFBFB] text-black'}`}>
 				<h1 className="text-2xl">add item</h1>
 				<form onSubmit={handleSubmit}>
 					<span>ip Address</span>
 					<br />
-					<div className="w-full flex justify-center align-middle gap-1">
+					<div className="w-full flex justify-center align-middle gap-1 text-white">
 						<input
 							className={`my-2 mb-4 p-2 text-base w-14 rounded-md ${
 								!isIpErrors[0] ? "ring-4 ring-red-600" : ""
@@ -89,7 +90,7 @@ function AddItem() {
 						/>
 						<span className="self-end text-2xl pb-3 mx-0">.</span>
 						<input
-							className={`my-2 mb-4 p-2 text-base w-14 rounded-md ${
+							className={`my-2 mb-4 p-2 text-base w-14 rounded-md  ${
 								!isIpErrors[1] ? "ring-4 ring-red-600" : ""
 							} `}
 							type="text"
@@ -131,14 +132,14 @@ function AddItem() {
 					</div>
 					<p className=" p-0 text-red-600 text-[14px]  ">
 						{isIpErrors.some((err) => err == false) &&
-							`each Octave must be a number and between 0 and 255`}
+							`each Octave must be a number between 0 and 255`}
 					</p>
 
 					<span>name: </span>
 					<label className="">
 						<br />
 						<input
-							className={`my-2 mb-4 p-2 text-base w-64 rounded-md`}
+							className={`my-2 mb-4 p-2 text-base w-64 rounded-md text-white`}
 							name="name"
 							type="text"
 							placeholder="name"

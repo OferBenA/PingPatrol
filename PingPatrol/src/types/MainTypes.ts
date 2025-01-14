@@ -47,3 +47,4 @@ export type ReceivedDomainDataType = {
 	history: { date: number; alive: boolean }[];
 	lastUpdate: lastUpdateType;
 };
+export type Theme = 'light' | 'dark';
