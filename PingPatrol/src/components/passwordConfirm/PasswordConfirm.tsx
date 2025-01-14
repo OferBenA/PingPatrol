@@ -84,12 +84,12 @@ function PasswordConfirm({
 		) {
 			setPasswordValidation((prevState) => ({
 				...prevState,
-				doesPassContainSpceialChar: true,
+				doesPassContainSpecialChar: true,
 			}));
 		} else {
 			setPasswordValidation((prevState) => ({
 				...prevState,
-				doesPassContainSpceialChar: false,
+				doesPassContainSpecialChar: false,
 			}));
 		}
 	}
@@ -195,7 +195,7 @@ function PasswordConfirm({
 							<img
 								className="check-img"
 								src={
-									passwordValidation.doesPassContainSpceialChar
+									passwordValidation.doesPassContainSpecialChar
 										? checkPass
 										: checkfails
 								}

@@ -9,22 +9,22 @@ const domainsRouter = express.Router();
 //if is on domain model: add is to the domains in UserModel
 //if not in domain model: create new DomainModel and add is to the domains in UserModel
 domainsRouter.put("/create", async (req, res) => {
-	const { ipOrDns, name, isFavorite, isIpOrDns, userId } = req.body;
+	const { ipAddr, name, isFavorite, userId } = req.body;
 	const domainId = uuidv4();
 
 	try {
 		const user = await UserModel.findOne({ userId: userId });
 		if (user) {
-			const domainAlreadyExist = await DomainModel.findOne({ domain: ipOrDns });
+			const domainAlreadyExist = await DomainModel.findOne({ domain: ipAddr });
 
 			//the domain is already created in the domainModel, just need to update
 			if (domainAlreadyExist) {
 				const domainAlreadyInUserModel = user.domains.some((domain) =>
-					domain.ipOrDns?.includes(ipOrDns)
+					domain.ipAddr?.includes(ipAddr)
 				);
 				if (!domainAlreadyInUserModel) {
 					user.domains.push({
-						ipOrDns,
+						ipAddr,
 						isFavorite,
 						name,
 						domainId: domainAlreadyExist.id ?? "",
@@ -38,14 +38,14 @@ domainsRouter.put("/create", async (req, res) => {
 			}
 			//if there is no domainModel already created, create new domain, and update the user model with the new domain.
 			else {
+				console.log(`${ipAddr} domain not exist, creating a new domain `)
 				await DomainModel.create({
 					id: domainId,
 					createdDate: new Date(),
-					isIpOrDns: isIpOrDns == "ip" ? "ip" : "dns",
-					domain: ipOrDns,
+					ipAddr: ipAddr,
 				});
 				user.domains.push({
-					ipOrDns,
+					ipAddr,
 					isFavorite,
 					name,
 					domainId: domainId,
@@ -65,11 +65,11 @@ domainsRouter.put("/create", async (req, res) => {
 	}
 });
 
-domainsRouter.get("/domainDetails/:domain", async (req, res) => {
-	const { domain } = req.params;
+domainsRouter.get("/domainDetails/:ipAddr", async (req, res) => {
+	const { ipAddr } = req.params;
 
 	try {
-		const domainToRes = await DomainModel.findOne({ domain: domain });
+		const domainToRes = await DomainModel.findOne({ ipAddr: ipAddr });
 
 		if (!domainToRes) {
 			res.status(404).json({ message: "domain not found" });
@@ -80,8 +80,7 @@ domainsRouter.get("/domainDetails/:domain", async (req, res) => {
 			history: domainToRes.history,
 			lastUpdate: domainToRes.history[domainToRes.history.length - 1],
 			createdDate: domainToRes.createdDate,
-			domain: domainToRes.domain,
-			isIpOrDns: domainToRes.isIpOrDns,
+			ipAddr: domainToRes.ipAddr,
 		});
 		return;
 	} catch (error) {

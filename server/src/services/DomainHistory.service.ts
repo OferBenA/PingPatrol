@@ -22,7 +22,7 @@ const updateHistory = async () => {
 					if (!domain) {
 						return;
 					}
-					let res: any = await ping.promise.probe(domain?.domain as string);
+					let res: any = await ping.promise.probe(domain?.ipAddr as string);
 					if (!res) {
 						return;
 					}

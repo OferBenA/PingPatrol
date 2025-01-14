@@ -7,7 +7,7 @@ export type ResterUserType = {
 export type PasswordValidation = {
 	ispass8chars: boolean;
 	doesPassContainUpperCase: boolean;
-	doesPassContainSpceialChar: boolean;
+	doesPassContainSpecialChar: boolean;
 	doesPassMatch: boolean;
 };
 export type LoginInfoType = {
@@ -15,10 +15,9 @@ export type LoginInfoType = {
 	password: string;
 };
 export type addItemType = {
-	ipOrDns: string;
+	ipAddr: string[];
 	name: string;
 	favorite: boolean;
-	isIpOrDns: "ip" | "dns" | undefined;
 };
 export type formInput = {
 	name: string;
@@ -34,14 +33,14 @@ export type lastUpdateType = {
 	endCurrentStatus: number;
 };
 export type domainDataType = {
-	ipOrDns: string;
+	ipAddr: string;
 	isFavorite: boolean;
 	name: string;
 	domainId: string;
 	lastUpdate: lastUpdateType;
 };
 export type ReceivedDomainDataType = {
-	domain: string;
+	ipAddr: string;
 	id: string;
 	createdDate: string;
 	isIpOrDns: string;

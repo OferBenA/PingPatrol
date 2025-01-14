@@ -7,7 +7,7 @@ const userSchema = new Schema({
   userName: { type: String },
   password: { type: String },
   domains: {type: [{
-    ipOrDns: String,
+    ipAddr: String,
     isFavorite: Boolean,
     name: String,
     domainId: String,

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import DomainListSkeletons from "./Skeletons/DomainListSkeletons/DomainListSkeletons";
 function Domains() {
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const handleFavorite = useCallback(
 		async (domain: domainDataType) => {
@@ -24,7 +24,7 @@ function Domains() {
 	const handleDelete = useCallback(
 		async (domain: domainDataType) => {
 			const affirm = confirm(
-				`are you sure you want to delete ${domain.ipOrDns} ?`
+				`are you sure you want to delete ${domain.ipAddr} ?`
 			);
 			if (affirm) {
 				setDomainData(null);
@@ -41,6 +41,7 @@ function Domains() {
 		try {
 			const data = await axiosClient.get(`/api/domains/allPerUser`);
 			if (data) {
+				console.log(`fetched new data at: ${new Date()}`);
 				setDomainData(data.data);
 			}
 		} catch (error) {
@@ -49,10 +50,16 @@ function Domains() {
 	}, [domainData]);
 
 	useEffect(() => {
+		let intervalKey: number;
 		try {
 			fetchData();
+			intervalKey = setInterval(fetchData, 30000);
 		} catch (error) {
 			console.error(`error getting user data: ${error}`);
+		} finally {
+			return () => {
+				clearInterval(intervalKey);
+			};
 		}
 	}, []);
 
@@ -69,7 +76,7 @@ function Domains() {
 					>
 						<StatusImg lastUpdate={domain.lastUpdate} />
 						<h1 className="text-2xl px-10">{domain.name}</h1>
-						<h1 className="text-lg">{domain.ipOrDns}</h1>
+						<h1 className="text-lg">{domain.ipAddr}</h1>
 						<div className=" mt-2 flex justify-between align-middle relative">
 							{domain.isFavorite ? (
 								<img
@@ -82,7 +89,7 @@ function Domains() {
 							) : (
 								<img
 									onClick={() => handleFavorite(domain)}
-									title={`Add to favirites ⭐`}
+									title={`Add to favorites ⭐`}
 									className="w-12 hover:animate-bounce hover:cursor-pointer p-1 drop-shadow-xl"
 									src={emptyStarIcon}
 									alt="star"
@@ -96,7 +103,12 @@ function Domains() {
 								alt="delete"
 							/>
 						</div>
-						<button onClick={() =>navigate(`/domainDetails/${domain.ipOrDns}`)} className="bg-slate-400 mt-4 pr-2">more details <span className="hover:animate-bounce">→</span></button>
+						<button
+							onClick={() => navigate(`/domainDetails/${domain.ipAddr}`)}
+							className="bg-slate-400 mt-4 pr-2"
+						>
+							more details <span className="hover:animate-bounce">→</span>
+						</button>
 					</div>
 				))}
 			</div>

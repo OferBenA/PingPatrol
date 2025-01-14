@@ -16,7 +16,7 @@ function RegisterPage() {
 		useState<PasswordValidation>({
 			ispass8chars: false,
 			doesPassContainUpperCase: false,
-			doesPassContainSpceialChar: false,
+			doesPassContainSpecialChar: false,
 			doesPassMatch: false,
 		});
 	const navigate = useNavigate();
@@ -43,7 +43,7 @@ function RegisterPage() {
 		if (
 			!passwordValidation.ispass8chars ||
 			!passwordValidation.doesPassContainUpperCase ||
-			!passwordValidation.doesPassContainSpceialChar
+			!passwordValidation.doesPassContainSpecialChar
 		) {
 			alert("password is not strong enough");
 			return;

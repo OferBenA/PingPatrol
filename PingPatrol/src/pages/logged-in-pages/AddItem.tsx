@@ -1,97 +1,144 @@
 import { memo, useCallback, useState } from "react";
-import {  addItemType } from "../../types/MainTypes";
+import { addItemType } from "../../types/MainTypes";
 import { axiosClient } from "../../axiosClient";
-import ipaddress from "../../assets/ip-adress.png";
-import dns from "../../assets/dns.png";
 import axios from "axios";
 import { useUserContext } from "../../Contexts/User-Context";
 import { useNavigate } from "react-router-dom";
 
 function AddItem() {
 	const [formData, setFormData] = useState<addItemType>({
-		ipOrDns: "",
+		ipAddr: ["", "", "", ""],
 		name: "",
 		favorite: false,
-		isIpOrDns: undefined,
 	});
+	const [isIpErrors, setIsIpErrors] = useState([true, true, true, true]);
 	const { userData } = useUserContext();
-	const navigation = useNavigate()
+	const navigation = useNavigate();
 
-	const handleIpOrDnsChange = useCallback(
+	const handleCheckedChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const ipOrDns = e.target.value;
-			checkIpOrDns();
-			setFormData((prevState) => ({ ...prevState, ipOrDns }));
+			const inputValue = e.target.checked;
+			setFormData((prev) => ({ ...prev, favorite: inputValue }));
 		},
 		[formData]
 	);
 
-	const handleCheckedChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const inputValue = e.target.checked;
-		setFormData((prev) => ({ ...prev, favorite: inputValue }));
-	},[formData]);
-
-	const  checkIpOrDns = useCallback(() => {
-		if (/^[0-9.]+$/.test(formData.ipOrDns)) {
-			setFormData((prev) => ({ ...prev, isIpOrDns: "ip" }));
-			return;
-		} else {
-			setFormData((prev) => ({ ...prev, isIpOrDns: "dns" }));
-			return;
-		}
-	},[formData])
-
-	const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		try {
-			const response = await axiosClient.put("/api/domains/create", {
-				ipOrDns: formData.ipOrDns,
-				name: formData.name,
-				isFavorite: formData.favorite,
-				isIpOrDns: formData.isIpOrDns,
-				userId: userData.userId,
-			});
-			alert(response.data.message);
-			navigation('/');
-		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
-				console.log(err);
-				alert(`unable to create domain: ${err.response?.data}`);
+	const handleIpChange = useCallback(
+		(index: number, value: string) => {
+			if (isNaN(Number(value)) || Number(value) < 0 || Number(value) > 255) {
+				setIsIpErrors((prev) =>
+					prev.map((ipErr, i) => (i === index ? false : ipErr))
+				);
+			} else {
+				setIsIpErrors((prev) =>
+					prev.map((ipErr, i) => (i === index ? true : ipErr))
+				);
 			}
-		}
-	},[formData]);
+			setFormData((prev) => ({
+				...prev,
+				ipAddr: prev.ipAddr.map((ip, i) => (i === index ? value : ip)),
+			}));
+		},
+		[formData]
+	);
+
+	const handleSubmit = useCallback(
+		async (event: React.FormEvent<HTMLFormElement>) => {
+			event.preventDefault();
+
+			try {
+				const response = await axiosClient.put("/api/domains/create", {
+					ipAddr: formData.ipAddr.join("."),
+					name: formData.name,
+					isFavorite: formData.favorite,
+					userId: userData.userId,
+				});
+				console.log(formData.ipAddr.join("."));
+				console.log(response);
+				alert(response.data.message);
+				navigation("/");
+			} catch (err: unknown) {
+				if (axios.isAxiosError(err)) {
+					console.log(err);
+					alert(`unable to create domain: ${err.response?.data}`);
+				}
+			}
+		},
+		[formData]
+	);
 
 	return (
 		<div className=" mt-32 ml-36 w-full h-full flex justify-center items-start">
 			<div className="gap-4 w-96 h-96 bg-[#2d3535] shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl">
 				<h1 className="text-2xl">add item</h1>
 				<form onSubmit={handleSubmit}>
-					<span>ip \ dns address: </span>
-					<label className="relative">
-						<br />
-						<input
-							className="my-2 mb-4 p-2 text-base w-64"
-							name="ipOrDns"
-							type="text"
-							placeholder="ip \ dns"
-							required
-							maxLength={90}
-							value={formData.ipOrDns}
-							onChange={handleIpOrDnsChange}
-						/>
-						<img
-							className="w-7 ml-2 mt-4 inline absolute"
-							src={formData.isIpOrDns == "ip" ? ipaddress : dns}
-							alt="ipaddress/dns"
-						/>
-					</label>
+					<span>ip Address</span>
 					<br />
+					<div className="w-full flex justify-center align-middle gap-1">
+						<input
+							className={`my-2 mb-4 p-2 text-base w-14 rounded-md ${
+								!isIpErrors[0] ? "ring-4 ring-red-600" : ""
+							} `}
+							type="text"
+							pattern="^(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$"
+							placeholder="255"
+							required
+							maxLength={3}
+							value={formData.ipAddr[0]}
+							onChange={(e) => handleIpChange(0, e.target.value)}
+						/>
+						<span className="self-end text-2xl pb-3 mx-0">.</span>
+						<input
+							className={`my-2 mb-4 p-2 text-base w-14 rounded-md ${
+								!isIpErrors[1] ? "ring-4 ring-red-600" : ""
+							} `}
+							type="text"
+							pattern="^(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$"
+							placeholder="255"
+							required
+							maxLength={3}
+							value={formData.ipAddr[1]}
+							onChange={(e) => handleIpChange(1, e.target.value)}
+						/>
+						<span className="self-end text-2xl pb-3">.</span>
+
+						<input
+							className={`my-2 mb-4 p-2 text-base w-14 rounded-md ${
+								!isIpErrors[2] ? "ring-4 ring-red-600" : ""
+							} `}
+							type="text"
+							pattern="^(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$"
+							placeholder="255"
+							required
+							maxLength={3}
+							value={formData.ipAddr[2]}
+							onChange={(e) => handleIpChange(2, e.target.value)}
+						/>
+						<span className="self-end text-2xl pb-3">.</span>
+
+						<input
+							className={`my-2 mb-4 p-2 text-base w-14 rounded-md  ${
+								!isIpErrors[3] ? "ring-4 ring-red-600" : ""
+							} `}
+							type="text"
+							pattern="^(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$"
+							placeholder="255"
+							required
+							maxLength={3}
+							value={formData.ipAddr[3]}
+							onChange={(e) => handleIpChange(3, e.target.value)}
+						/>
+					</div>
+					<p className=" p-0 text-red-600 text-[14px]  ">
+						{isIpErrors.some((err) => err == false) &&
+							`each Octave must be a number and between 0 and 255`}
+					</p>
+
 					<span>name: </span>
 					<label className="">
 						<br />
 						<input
-							className="my-2 mb-4 p-2 text-base w-64"
+							className={`my-2 mb-4 p-2 text-base w-64 rounded-md`}
 							name="name"
 							type="text"
 							placeholder="name"

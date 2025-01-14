@@ -32,11 +32,11 @@ function DomainDetails() {
 		return <DomainDetailsSkeletons />;
 	}
 	if (!domainData.lastUpdate) {
-		return <DomainDetailsSyncing domain={domainData.domain}/>;
+		return <DomainDetailsSyncing domain={domainData.ipAddr}/>;
 	}
 	return (
 		<div className=" pt-20 p-8 mt-32 ml-36 min-h-[600px] min-w-[500px] max-w-[calc(80vw-300px)] rounded-3xl bg-[#2d3535] shadow-[10px_10px_20px_20px_rgba(0,0,0,0.5)]">
-			<h1 className="text-5xl mb-5">{domainData.domain}</h1>
+			<h1 className="text-5xl mb-5">{domainData.ipAddr}</h1>
 			<div className="w-full flex justify-center align-middle pb-5">
 				{domainData.lastUpdate.alive && (
 					<img className="w-20" src={arrowUp} alt="arrowUp" />
