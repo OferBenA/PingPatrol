@@ -13,14 +13,13 @@
     padding: 10px;
 
     cursor: progress;
-    background-color: #2d3535;
     border-radius: 15px;
 
     .title {
         width: 80%;
         height: 80px;
         border-radius: 10px;
-        background: linear-gradient(90deg, rgba(221, 221, 221, 0.158) 40%, #efefef4d,rgba(221, 221, 221, 0.158)  60%)
+        background: linear-gradient(90deg, rgba(109, 99, 99, 0.158) 40%, #efefef4d,rgba(109, 99, 99, 0.158)  60%)
             right / 300% 100%;
         animation: skeleton-loading 1.5s linear infinite;
         margin-bottom: 20px;
@@ -30,7 +29,7 @@
         width: 80%;
         height: 40px;
         border-radius: 8px;
-        background: linear-gradient(90deg, rgba(221, 221, 221, 0.158) 40%, #efefef4d,rgba(221, 221, 221, 0.158) 60%)
+        background: linear-gradient(90deg, rgba(109, 99, 99, 0.158) 40%, #efefef4d,rgba(109, 99, 99, 0.158)  60%)
             right / 300% 100%;
         animation: skeleton-loading 1.5s linear infinite;
         margin-bottom: 10px;

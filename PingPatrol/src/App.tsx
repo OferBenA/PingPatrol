@@ -10,13 +10,19 @@ import LeftNavBar from "./components/LeftNavBar/LeftNavBar";
 import Dashboard from "./pages/logged-in-pages/Dashboard";
 import AddItem from "./pages/logged-in-pages/AddItem";
 import DomainDetails from "./pages/logged-in-pages/DomainDetails";
+import { useThemeStore } from "./Store/useTheme";
 function App() {
 	const { userData } = useUserContext();
-
+	const theme = useThemeStore((state) => state.theme)
 
 	return (
 		<>
-			<AuthProvider>
+			<div className={` ${
+				theme == "dark"
+					? "bg-[#1a2222] text-white"
+					: "bg-[#BCCCDC] text-slate-700"
+			}`}>
+				<AuthProvider>
 					<BrowserRouter>
 						<NavBar />
 						{!userData.isLoggedIn ? (
@@ -43,7 +49,8 @@ function App() {
 							</>
 						)}
 					</BrowserRouter>
-			</AuthProvider>
+				</AuthProvider>
+			</div>
 		</>
 	);
 }

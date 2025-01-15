@@ -4,7 +4,6 @@ import "./RegisterPage.css";
 import PasswordConfirm from "../../../components/passwordConfirm/PasswordConfirm";
 import { PasswordValidation, ResterUserType } from "../../../types/MainTypes";
 import axios, { AxiosError } from "axios";
-import { useThemeStore } from "../../../Store/useTheme";
 
 function RegisterPage() {
 	const [formData, setFormData] = useState<ResterUserType>({
@@ -21,7 +20,6 @@ function RegisterPage() {
 			doesPassMatch: false,
 		});
 	const navigate = useNavigate();
-	const theme = useThemeStore((state) => state.theme)
 
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,8 +77,8 @@ function RegisterPage() {
 		}
 	};
 	return (
-		<div className={`RegisterPage ${theme == 'dark' ? 'bg-[#1a2222]': 'bg-[#BCCCDC]'}`}>
-			<div className={`register-div ${theme == 'dark' ? 'bg-[#1a2222] text-white': 'bg-[#FBFBFB] text-black'}`}>
+		<div className={`RegisterPage  w-screen h-screen`}>
+			<div className={`register-div `}>
 				<h2>Register</h2>
 				<form onSubmit={handleSubmit}>
 					<p>email </p>

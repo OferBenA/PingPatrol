@@ -77,7 +77,7 @@ function Domains() {
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div
 						key={index}
-						className={`hover:cursor-pointer min-w-48 w-fit bg-[#2d3535] py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300 ${theme == 'dark' ? 'bg-[#2d3535] text-white': 'bg-[#FBFBFB] text-black'}`}
+						className={`hover:cursor-pointer min-w-48 w-fit py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300 ${theme == 'dark' ? 'bg-[#2d3535] text-white': 'bg-[#FBFBFB] text-black'}`}
 					>
 						<StatusImg lastUpdate={domain.lastUpdate} />
 						<h1 className="text-2xl px-10">{domain.name}</h1>

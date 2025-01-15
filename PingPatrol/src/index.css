@@ -29,9 +29,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.leftNavBarBtn{
-  @apply bg-gray-800 px-3 hover:cursor-pointer text-lg;
-}
+
 
 button{
   padding: 5px 15px;

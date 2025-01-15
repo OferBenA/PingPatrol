@@ -1,8 +1,15 @@
 import  { memo } from 'react'
 import sync from '../../../assets/sync.svg'
+import { useThemeStore } from '../../../Store/useTheme'
 function DomainDetailsSyncing({domain}: {domain:string}) {
+		const theme = useThemeStore((state) => state.theme)
+
   return (
-    <div className=" pt-20 p-8 mt-32 ml-36 min-h-[400px] min-w-[500px] max-w-[calc(80vw-300px)] rounded-3xl bg-[#2d3535] shadow-[10px_10px_20px_20px_rgba(0,0,0,0.5)]">
+    <div className={`pt-20 p-8 mt-32 ml-36 min-h-[400px] min-w-[500px] max-w-[calc(80vw-300px)] rounded-3xl  ${
+				theme == "dark"
+					? "bg-[#1a2222] text-white"
+					: "bg-[#BCCCDC] text-slate-700"
+			}`}>
 				<h1 className="text-5xl mb-5">{domain}</h1>
 				<div className="w-full flex justify-center align-middle pb-5">
 					<img className="w-20" src={sync} alt="sync" />
