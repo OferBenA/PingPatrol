@@ -38,7 +38,7 @@ function DomainDetails() {
 	}
 	return (
 		<div
-			className={`pt-10 pl-36 w-screen min-h-screen ${
+			className={`pt-10 pl-36 w-screen min-h-screen flex justify-center items-start ${
 				theme == "dark"
 					? "bg-[#1a2222] text-white"
 					: "bg-[#BCCCDC] text-slate-700"

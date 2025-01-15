@@ -10,6 +10,7 @@ import DomainListSkeletons from "./Skeletons/DomainListSkeletons/DomainListSkele
 import { useThemeStore } from "../../../Store/useTheme";
 function Domains() {
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
+	const [timeFetched, setTimeFetched] = useState<number>()
 	const navigate = useNavigate();
 	const theme = useThemeStore((state) => state.theme)
 
@@ -41,6 +42,7 @@ function Domains() {
 
 	const fetchData = useCallback(async () => {
 		try {
+			setTimeFetched(Date.now())
 			const data = await axiosClient.get(`/api/domains/allPerUser`);
 			if (data) {
 				console.log(`fetched new data at: ${new Date()}`);
@@ -70,6 +72,7 @@ function Domains() {
 	}
 	return (
 		<>
+			<h1>last Update: {String(new Date(timeFetched ?? 0).toLocaleTimeString("en-GB")) }</h1>
 			<div className="flex justify-center flex-wrap gap-4 align-top">
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div

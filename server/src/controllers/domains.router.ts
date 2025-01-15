@@ -67,10 +67,11 @@ domainsRouter.put("/create", async (req, res) => {
 
 domainsRouter.get("/domainDetails/:ipAddr", async (req, res) => {
 	const { ipAddr } = req.params;
+	const userData = (req as any).userData
 
 	try {
 		const domainToRes = await DomainModel.findOne({ ipAddr: ipAddr });
-
+		console.log(domainToRes)
 		if (!domainToRes) {
 			res.status(404).json({ message: "domain not found" });
 			return;
