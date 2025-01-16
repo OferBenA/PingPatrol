@@ -30,8 +30,17 @@ const updateHistory = async () => {
 						if (lastUpdate.alive == res.alive) {
 							lastUpdate.endCurrentStatus = Date.now();
 						}
+						//status change, creating a new object and pushing on the the history
+						else {
+							console.log(`${domain?.ipAddr} is now ${res.alive ? 'up' : 'down'}, pushing new change to history array`)
+							domain.history.push({
+								alive: res.alive,
+								startCurrentStatus: Date.now(),
+								endCurrentStatus: Date.now(),
+							});
+						}
 					} else {
-						// console.log(`Starting new log object, for: ${res.host}`);
+						console.log(`Starting new log object, for: ${res.host}`);
 						domain.history.push({
 							alive: res.alive,
 							startCurrentStatus: Date.now(),

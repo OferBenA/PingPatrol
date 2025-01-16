@@ -72,7 +72,7 @@ function Domains() {
 	}
 	return (
 		<>
-			<h1>last Update: {String(new Date(timeFetched ?? 0).toLocaleTimeString("en-GB")) }</h1>
+			<h1 >last Update: {String(new Date(timeFetched ?? 0).toLocaleTimeString("en-GB")) }</h1>
 			<div className="flex justify-center flex-wrap gap-4 align-top">
 				{domainData?.map((domain: domainDataType, index: number) => (
 					<div

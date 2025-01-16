@@ -44,7 +44,10 @@ export type ReceivedDomainDataType = {
 	id: string;
 	createdDate: string;
 	isIpOrDns: string;
-	history: { date: number; alive: boolean }[];
+	history: lastUpdateType[];
 	lastUpdate: lastUpdateType;
+	name: string;
+	isFavorite:boolean;
+
 };
 export type Theme = 'light' | 'dark';

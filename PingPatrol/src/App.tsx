@@ -17,7 +17,8 @@ function App() {
 
 	return (
 		<>
-			<div className={` ${
+			<div className={` max-w-[100%] ${
+
 				theme == "dark"
 					? "bg-[#1a2222] text-white"
 					: "bg-[#BCCCDC] text-slate-700"
