@@ -8,6 +8,7 @@ import StatusImg from "./StatusImg";
 import { useNavigate } from "react-router-dom";
 import DomainListSkeletons from "./Skeletons/DomainListSkeletons/DomainListSkeletons";
 import { useThemeStore } from "../../../Store/useTheme";
+import { FRONT_REFRESH_RATE_SLOW } from "../../../services/consts.service";
 function Domains() {
 	const [domainData, setDomainData] = useState<domainDataType[] | null>();
 	const [timeFetched, setTimeFetched] = useState<number>()
@@ -57,7 +58,7 @@ function Domains() {
 		let intervalKey: number;
 		try {
 			fetchData();
-			intervalKey = setInterval(fetchData, 30000);
+			intervalKey = setInterval(fetchData, FRONT_REFRESH_RATE_SLOW);
 		} catch (error) {
 			console.error(`error getting user data: ${error}`);
 		} finally {

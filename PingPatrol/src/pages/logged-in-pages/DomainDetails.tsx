@@ -3,10 +3,11 @@ import { axiosClient } from "../../axiosClient";
 import DomainDetailsSkeletons from "./components/Skeletons/domainDetailsSkeletons/domainDetailsSkeletons";
 import arrowUp from "../../assets/arrow_up.svg";
 import arrowDown from "../../assets/arrow_down.svg";
-import { ReceivedDomainDataType, domainDataType } from "../../types/MainTypes";
+import { ReceivedDomainDataType } from "../../types/MainTypes";
 import DomainDetailsSyncing from "./components/DomainDetailsSyncing";
 import { useThemeStore } from "../../Store/useTheme";
 import { timestampToDataAndTime, timestampToTime } from "../../services/utils.service";
+import {  FRONT_REFRESH_RATE_SLOW } from "../../services/consts.service";
 function DomainDetails() {
 	const [domainData, setDomainData] = useState<ReceivedDomainDataType | null>();
 	const [timeFetched, setTimeFetched] = useState<number>();
@@ -35,7 +36,7 @@ function DomainDetails() {
 		let intervalKey: number;
 		try {
 			fetchData();
-			intervalKey = setInterval(fetchData, 30000);
+			intervalKey = setInterval(fetchData, FRONT_REFRESH_RATE_SLOW);
 		} catch (error) {
 			console.error(`error getting user data: ${error}`);
 		} finally {

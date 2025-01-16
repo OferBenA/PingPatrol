@@ -1,0 +1,2 @@
+export const FRONT_REFRESH_RATE_FAST = 10000;
+export const FRONT_REFRESH_RATE_SLOW = 30000;
