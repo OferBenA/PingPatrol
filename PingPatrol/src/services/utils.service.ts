@@ -17,6 +17,6 @@ export function timestampToDataAndTime(timeStamp: number | undefined):string{
   const time = new Date(timeStamp ?? "0").toLocaleTimeString("en-GB");
   const day = new Date(timeStamp ?? "0").getDate();
   const month = new Date(timeStamp ?? '0').getMonth()
-  const year = new Date(timeStamp ?? '0').getFullYear()
+  const year = new Date(timeStamp ?? '0').getFullYear() % 100
   return `${time}, ${day}-${month +1}-${year}`
 }

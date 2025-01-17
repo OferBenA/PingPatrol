@@ -5,6 +5,9 @@
 	align-items: center;
 	justify-content: space-around;
     position: relative;
+    max-width: 100%;
+    width: 100vw;
+    height: calc(100vh - 70px);
 
     .register-div{
         position: relative;

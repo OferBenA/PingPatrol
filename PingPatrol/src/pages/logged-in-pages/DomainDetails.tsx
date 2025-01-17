@@ -53,7 +53,7 @@ function DomainDetails() {
 	}
 	return (
 		<div
-			className={`pt-10 pl-36 w-screen min-h-screen flex justify-center items-start ${
+			className={`pt-10 pl-36 w-screen min-h-screen max-w-full flex justify-center items-start ${
 				theme == "dark"
 					? "bg-[#1a2222] text-white"
 					: "bg-[#BCCCDC] text-slate-700"
@@ -80,9 +80,9 @@ function DomainDetails() {
 				<h1 className={`text-4xl mb-2`}>{domainData.name}</h1>
 				<h1 className={`text-23xl`}>device history</h1>
 				<div className=" flex justify-center flex-wrap gap-1 align-top pt-3">
-					{domainData.history.reverse().map((domain) =>
+					{domainData.history.reverse().map((domain, index: number ) =>
 						domain.alive ? (
-							<div className="flex justify-center  flex-nowrap">
+							<div key={index} className="flex justify-center  flex-nowrap">
 								<div
 									className="bg-green-500 min-w-16 p-4  rounded-[5px_0_0_5px] text-left"
 									title={`end of current status: ${timestampToDataAndTime(

@@ -4,6 +4,9 @@
     display: flex;
 	align-items: center;
 	justify-content: space-around;
+    max-width: 100%;
+    width: 100vw;
+    height: calc(100vh - 70px);
 
     .login-div{
         box-shadow: 10px 10px 20px 20px rgba(0,0,0,0.5);

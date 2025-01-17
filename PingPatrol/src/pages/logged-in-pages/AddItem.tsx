@@ -144,7 +144,7 @@ function AddItem() {
 							type="text"
 							placeholder="name"
 							required
-							maxLength={15}
+							maxLength={40}
 							value={formData.name}
 							onChange={(e) =>
 								setFormData((perv) => ({ ...perv, name: e.target.value }))

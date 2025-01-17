@@ -77,7 +77,7 @@ function RegisterPage() {
 		}
 	};
 	return (
-		<div className={`RegisterPage  w-screen h-screen`}>
+		<div className={`RegisterPage`}>
 			<div className={`register-div `}>
 				<h2>Register</h2>
 				<form onSubmit={handleSubmit}>

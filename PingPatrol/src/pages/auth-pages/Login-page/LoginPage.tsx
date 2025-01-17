@@ -56,7 +56,7 @@ function LoginPage() {
 	};
 
 	return (
-		<div className={`LoginPage w-screen h-screen`}>
+		<div className={`LoginPage `}>
 			<div className={`login-div `}>
 				<h2>Login</h2>
 				<form onSubmit={handleSubmit}>
