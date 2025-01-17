@@ -15,10 +15,11 @@ domainsRouter.put("/create", async (req, res) => {
 	try {
 		const user = await UserModel.findOne({ userId: userId });
 		if (user) {
-			const domainAlreadyExist = await DomainModel.findOne({ domain: ipAddr });
+			const domainAlreadyExist = await DomainModel.findOne({ ipAddr: ipAddr });
 
 			//the domain is already created in the domainModel, just need to update
 			if (domainAlreadyExist) {
+
 				const domainAlreadyInUserModel = user.domains.some((domain) =>
 					domain.ipAddr?.includes(ipAddr)
 				);
@@ -35,6 +36,10 @@ domainsRouter.put("/create", async (req, res) => {
 						.json({ message: "domain added to user successfully", domainId });
 					return;
 				}
+				res
+						.status(201)
+						.json({ message: "domain already in the user DB", domainId });
+					return;
 			}
 			//if there is no domainModel already created, create new domain, and update the user model with the new domain.
 			else {
