@@ -45,7 +45,7 @@ function Domains() {
 		</div>
 			<div className="flex justify-center flex-wrap gap-4 align-top">
 				{domainData?.map((domain: domainDataType, index: number) => (
-					<Domain domain= {domain} index={index} setDomainData={setDomainData} fetchData={fetchData}/>
+					<Domain key={index} domain= {domain}  setDomainData={setDomainData} fetchData={fetchData}/>
 				))}
 			</div>
 		</>

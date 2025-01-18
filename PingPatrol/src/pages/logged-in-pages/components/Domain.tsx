@@ -1,4 +1,4 @@
-import { Dispatch, memo, SetStateAction, useCallback } from "react";
+import {  memo, useCallback } from "react";
 import { domainDataType } from "../../../types/MainTypes";
 import StatusImg from "./StatusImg";
 import { axiosClient } from "../../../axiosClient";
@@ -9,13 +9,11 @@ import deleteIcon from "../../../assets/delete.svg";
 import { useNavigate } from "react-router-dom";
 type ParametersType = {
 	domain: domainDataType;
-	index: number;
 	setDomainData: React.Dispatch<React.SetStateAction<domainDataType[] | null | undefined>>;
 	fetchData: () => void;
 };
 function Domain({
 	domain,
-	index,
 	setDomainData,
 	fetchData,
 }: ParametersType) {
@@ -43,7 +41,6 @@ function Domain({
 	}, []);
 	return (
 		<div
-			key={index}
 			className={`hover:cursor-pointer min-w-48 w-fit py-5 px-4 rounded-lg hover:shadow-[3px_3px_5px_5px_rgba(0,0,0,0.3)] transition duration-300 ${
 				theme == "dark" ? "bg-[#2d3535] text-white" : "bg-[#FBFBFB] text-black"
 			}`}
