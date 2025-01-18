@@ -41,7 +41,7 @@ export type domainDataType = {
 };
 export type ReceivedDomainDataType = {
 	ipAddr: string;
-	id: string;
+	domainId: string;
 	createdDate: string;
 	isIpOrDns: string;
 	history: lastUpdateType[];

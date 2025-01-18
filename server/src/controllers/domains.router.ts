@@ -85,6 +85,7 @@ domainsRouter.get("/domainDetails/:ipAddr", async (req, res) => {
 
 		res.json({
 			history: domainToRes.history,
+			domainId: domainToRes.id,
 			lastUpdate: domainToRes.history[domainToRes.history.length - 1],
 			createdDate: domainToRes.createdDate,
 			ipAddr: domainToRes.ipAddr,
@@ -161,6 +162,54 @@ domainsRouter.post("/updateDomainPerUser", async (req, res) => {
 		console.error(`error accrued while trying to change a user ${error}`);
 	}
 });
+
+domainsRouter.post('/handleFavorite' , async (req,res) =>{
+	const { userId } = (req as any).userData;
+	const {domainId} = req.body;
+	try {
+		const user = await UserModel.findOne({ userId: userId });
+			if (!user) {
+				res.status(400).send("error finding user");
+				return;
+			}
+			// console.log(domainId)
+			const domainToUpdate = user.domains.find(domain => domain.domainId == domainId)
+			if(domainToUpdate?.isFavorite != undefined){
+				domainToUpdate.isFavorite = !domainToUpdate.isFavorite
+			}
+			user.save();
+			res.send(`user changed successfully`);
+
+	} catch (error) {
+		console.error(`error accrued while trying to change users favorite ${error}`);
+		res.status(500).send("error trying to change users favorite");
+	}
+})
+domainsRouter.post('/updateName' , async (req,res) =>{
+	const { userId } = (req as any).userData;
+	const {newName, domainId} = req.body;
+	try {
+		const user = await UserModel.findOne({ userId: userId });
+			if (!user) {
+				res.status(400).send("error finding user");
+				return;
+			}
+			// console.log(domainId)
+			const domainToUpdate = user.domains.find(domain => domain.domainId == domainId)
+			if(domainToUpdate){
+				domainToUpdate.name = newName
+			}else{
+				throw new Error('not able to find domainToUpdate in "updateName" endpoint ')
+			}
+			user.save();
+			res.send(`user changed successfully`);
+
+	} catch (error) {
+		console.error(`error accrued while trying to change domain name ${error}`);
+		res.status(500).send("error while trying to change domain name");
+	}
+})
+
 domainsRouter.delete("/deleteDomainPerUser/:domainId", async (req, res) => {
 	const { userId } = (req as any).userData;
 	const { domainId } = req.params;
