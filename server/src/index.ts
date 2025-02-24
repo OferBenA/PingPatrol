@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
 	cors({
-		origin: "http://localhost:5173", // Allow requests from your frontend
+		origin: ["http://localhost:5173/", "https://pingpatrol.oferbenami.com"], // Allow requests from your frontend
 	})
 );
 
