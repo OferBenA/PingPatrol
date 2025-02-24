@@ -1,7 +1,7 @@
 ![Alt text](./PingPatrol/src/assets/PingPatrolLightIcon.png)
 # PingPatrol
 
-PingPatrol is a Monitoring app that can track IP \ DNS addresses and gives you insight on them.
+PingPatrol is a Monitoring app that can track IP addresses and gives you insight on them.
 
 ## Installation
 In .env file change the `MONGO_URI` <br>
