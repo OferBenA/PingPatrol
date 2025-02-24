@@ -13,17 +13,17 @@ dotenv.config();
 const app = express();
 const port = process.env.SERVER_PORT || 3000;
 
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/";
+const mongoURI = process.env.MONGO_URI ?? '' ;
 
-const mongoConnect = async () => {
-	try {
-		await mongoose.connect(mongoURI);
-		console.log(`mongoDB is connected to: ${mongoURI}`);
-	} catch (error) {
-		console.error(error);
-	}
-};
-mongoConnect()
+// const mongoConnect = async () => {
+// 	try {
+// 		await mongoose.connect(mongoURI);
+// 		console.log(`mongoDB is connected to: ${mongoURI}`);
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// };
+// mongoConnect()
 
 app.use("/public", express.static("./views/assets"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,6 +50,6 @@ app.use("/api/domains", authMiddleware, domainsRouter);
 
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
-	domainHistoryLogger();
+	// domainHistoryLogger();
 	// clearDomainHistory()
 });
