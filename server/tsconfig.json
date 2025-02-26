@@ -18,6 +18,6 @@
     "emitDecoratorMetadata": true,
     "sourceMap": false // Optional, set to true if you need source maps
   },
-  "include": ["src/**/*.ts", "src/index.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
