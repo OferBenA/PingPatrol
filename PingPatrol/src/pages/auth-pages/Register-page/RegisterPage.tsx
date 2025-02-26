@@ -57,7 +57,7 @@ function RegisterPage() {
 		try {
 			const result = await axios({
 				method: "put",
-				url: "http://localhost:3000/api/users/register",
+				url: "https://pingpatrol-backend.oferbenami.com/api/users/register",
 				data: {
 					email: formData.email,
 					userName: formData.userName,
