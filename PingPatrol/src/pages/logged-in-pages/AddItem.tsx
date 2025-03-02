@@ -132,7 +132,7 @@ function AddItem() {
 					</div>
 					<p className=" p-0 text-red-600 text-[14px]  ">
 						{isIpErrors.some((err) => err == false) &&
-							`each Octave must be a number between 0 and 255`}
+							`each Octet must be a number between 0 and 255`}
 					</p>
 
 					<span>name: </span>
