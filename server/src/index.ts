@@ -29,7 +29,7 @@ app.use("/public", express.static("./views/assets"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const corsOptions = {
-  origin: 'https://pingpatrol.oferbenami.com', // Or '*' for all origins (less secure)
+  origin: '*', // Or '*' for all origins (less secure)
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
   allowedHeaders: 'Content-Type,Authorization',

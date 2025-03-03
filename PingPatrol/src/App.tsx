@@ -11,6 +11,7 @@ import Dashboard from "./pages/logged-in-pages/Dashboard";
 import AddItem from "./pages/logged-in-pages/AddItem";
 import DomainDetails from "./pages/logged-in-pages/DomainDetails";
 import { useThemeStore } from "./Store/useTheme";
+import AddMultiple from "./pages/logged-in-pages/AddMultiple";
 function App() {
 	const { userData } = useUserContext();
 	const theme = useThemeStore((state) => state.theme)
@@ -41,6 +42,7 @@ function App() {
 								<Routes>
 									<Route path="/" element={<Dashboard />} />
 									<Route path="/addItem" element={<AddItem />} />
+									<Route path="/addMultipleItems" element={<AddMultiple />} />
 									<Route
 										path="/domaindetails/:domain"
 										element={<DomainDetails />}

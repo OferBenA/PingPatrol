@@ -69,7 +69,7 @@ function AddItem() {
 	);
 
 	return (
-		<div className={`pt-48 pl-36 w-screen min-h-screen flex justify-center items-start `}>
+		<div className={`pt-48 sm:pl-44 w-screen min-h-screen flex justify-center items-start `}>
 			<div className={`gap-4 w-96 h-96 shadow-xl rounded-3xl flex justify-center items-center flex-col text-xl ${theme == 'dark' ? 'bg-[#2d3535] text-white': 'bg-[#FBFBFB] text-black'}`}>
 				<h1 className="text-2xl">add item</h1>
 				<form onSubmit={handleSubmit}>

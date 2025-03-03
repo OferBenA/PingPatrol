@@ -50,4 +50,10 @@ export type ReceivedDomainDataType = {
 	isFavorite:boolean;
 
 };
+
+export type IpsToAddType = {
+	ip: string;
+	name: string;
+	isFavorite: boolean;
+};
 export type Theme = 'light' | 'dark';
