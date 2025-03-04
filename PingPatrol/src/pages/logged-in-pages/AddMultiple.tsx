@@ -75,8 +75,12 @@ function AddMultiple() {
 						<p className="text-sm">ip, name, isFavorite</p>
 
 						<textarea
-							className={`p-1 rounded-md text-sm`}
-							placeholder="10.10.10.10 , name , false"
+							className={`p-1 rounded-md text-sm ${
+								theme == "dark"
+									? "bg-[#3f4949] text-white"
+									: "bg-[#d3d2d2] text-black"
+							}`}
+							placeholder="10.10.10.10 , name1 , false &#10;20.20.20.20 , name1 , false"
 							name="Text1"
 							id="textarea"
 							cols={40}
