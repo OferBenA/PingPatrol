@@ -70,7 +70,7 @@ function AddMultiple() {
 				{stage == "first" ? (
 					<div className="flex justify-center items-center flex-col gap-2">
 						<p className="text-sm">
-							see format to add IPs in input placeholder
+							see format to add IPs in text area
 						</p>
 						<p className="text-sm">ip, name, isFavorite</p>
 

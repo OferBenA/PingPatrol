@@ -33,7 +33,7 @@ export function ipStringToObj(string: string): IpsToAddType[] {
 	);
 	const stringArrFormatted = stringArrNested.map((row, index) => ({
 		ip: row[0],
-		name: row[1] ? row[1] : `item${index}`,
+		name: row[1] ? row[1] : `item${index + 1}`,
 		isFavorite: row[2] == "true" ? true : false,
 	}));
 	return stringArrFormatted;
