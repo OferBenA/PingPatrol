@@ -72,7 +72,6 @@ function AddMultiple() {
 		}
 	};
 	const handleStage = () => {
-		console.log(ipData);
 		setStage("second");
 	};
 

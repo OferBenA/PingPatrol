@@ -9,17 +9,16 @@ const domainsRouter = express.Router();
 //if is on domain model: add is to the domains in UserModel
 //if not in domain model: create new DomainModel and add is to the domains in UserModel
 domainsRouter.put("/create", async (req, res) => {
-	const { ipAddr, name, isFavorite, userId } = req.body;
+	const { ipAddr, name, isFavorite } = req.body;
+	const { userId } = (req as any).userData;
 	const domainId = uuidv4();
 
 	try {
 		const user = await UserModel.findOne({ userId: userId });
 		if (user) {
 			const domainAlreadyExist = await DomainModel.findOne({ ipAddr: ipAddr });
-
 			//the domain is already created in the domainModel, just need to update
 			if (domainAlreadyExist) {
-
 				const domainAlreadyInUserModel = user.domains.some((domain) =>
 					domain.ipAddr?.includes(ipAddr)
 				);
@@ -72,8 +71,10 @@ domainsRouter.put("/create", async (req, res) => {
 
 domainsRouter.put("/createMultiple", async (req, res) => {
 	const body = req.body;
+	const { userId } = (req as any).userData;
 	const domainId = uuidv4();
 	console.log(body)
+	console.log(userId)
 	try {
 
 	} catch (error) {
