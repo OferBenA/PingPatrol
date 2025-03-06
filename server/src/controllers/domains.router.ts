@@ -70,6 +70,18 @@ domainsRouter.put("/create", async (req, res) => {
 	}
 });
 
+domainsRouter.put("/createMultiple", async (req, res) => {
+	const body = req.body;
+	const domainId = uuidv4();
+	console.log(body)
+	try {
+
+	} catch (error) {
+		console.error("Error creating a domain in the db: ", error);
+		res.status(500).send("Error creating new domain.");
+	}
+});
+
 domainsRouter.get("/domainDetails/:ipAddr", async (req, res) => {
 	const { ipAddr } = req.params;
 	const { userId } = (req as any).userData;

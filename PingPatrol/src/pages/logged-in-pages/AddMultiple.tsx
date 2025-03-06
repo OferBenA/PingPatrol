@@ -2,47 +2,84 @@ import {
 	TextareaHTMLAttributes,
 	memo,
 	useCallback,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
 import { axiosClient } from "../../axiosClient";
 import axios from "axios";
+import {
+	AllCommunityModule,
+	ModuleRegistry,
+	colorSchemeDark,
+	colorSchemeLight,
+	themeQuartz,
+} from "ag-grid-community";
+import type { ColDef } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
 import { useUserContext } from "../../Contexts/User-Context";
 import { useNavigate } from "react-router-dom";
 import { useThemeStore } from "../../Store/useTheme";
 import { IpsToAddType } from "../../types/MainTypes";
 import { ipStringToObj } from "../../services/utils.service";
 
+type IRow = {
+	ip: string;
+	name: string;
+	isFavorite: boolean;
+};
 function AddMultiple() {
-	const { userData } = useUserContext();
-	const ipData = useRef<IpsToAddType[]>();
+	ModuleRegistry.registerModules([AllCommunityModule]);
+
+	// const { userData } = useUserContext();
+	const [ipData, setIpData] = useState<IpsToAddType[] | null>();
 	const [ipDataRaw, setIpDataRaw] = useState<string>("");
 	const [stage, setStage] = useState<"first" | "second">("first");
 	const navigation = useNavigate();
 	const theme = useThemeStore((state) => state.theme);
+	const [colDefs] = useState<ColDef<IRow>[]>([
+		{ field: "ip" },
+		{ field: "name", editable: true },
+		{ field: "isFavorite", editable: true },
+	]);
+	const defaultColDef = {
+		flex: 1,
+	};
+	const myThemeDark = useMemo(
+		() => themeQuartz.withPart(colorSchemeDark),
+		[theme]
+	);
+	const myThemeLight = useMemo(
+		() => themeQuartz.withPart(colorSchemeLight),
+		[theme]
+	);
+
+	const gridOptions = useMemo(
+		() => ({
+			theme: theme == "dark" ? myThemeDark : myThemeLight,
+		}),
+		[theme]
+	);
 
 	const handleTextarea = () => {
 		const textareaString = document.querySelector(
 			"#textarea"
 		) as HTMLTextAreaElement;
 		if (textareaString) {
-			const stringArrFormatted = ipStringToObj(textareaString.value)
-			setIpDataRaw(textareaString.value)
-			ipData.current = stringArrFormatted;
+			const stringArrFormatted = ipStringToObj(textareaString.value);
+			setIpDataRaw(textareaString.value);
+			setIpData(stringArrFormatted);
 		}
 	};
-	const handleStage = () =>{
-		console.log(ipData.current)
-		setStage('second')
-
-	}
+	const handleStage = () => {
+		console.log(ipData);
+		setStage("second");
+	};
 
 	const handleSubmit = useCallback(
-		async (event: React.FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-
+		async () => {
 			try {
-				const response = await axiosClient.put("/api/domains/create", {});
+				const response = await axiosClient.put("/api/domains/createMultiple", {...ipData});
 				alert(response.data.message);
 				navigation("/");
 			} catch (err: unknown) {
@@ -52,12 +89,12 @@ function AddMultiple() {
 				}
 			}
 		},
-		[]
+		[ipData]
 	);
 
 	return (
 		<div
-			className={`pt-48 pl-44 w-screen min-h-screen flex justify-center items-start `}
+			className={`pt-48 sm:pl-44 w-screen min-h-screen flex justify-center items-start `}
 		>
 			<div
 				className={`shadow-xl p-4 rounded-3xl text-xl ${
@@ -69,9 +106,7 @@ function AddMultiple() {
 				<h1 className="text-2xl mb-3"> Add multiple items</h1>
 				{stage == "first" ? (
 					<div className="flex justify-center items-center flex-col gap-2">
-						<p className="text-sm">
-							see format to add IPs in text area
-						</p>
+						<p className="text-sm">see format to add IPs in text area</p>
 						<p className="text-sm">ip, name, isFavorite</p>
 
 						<textarea
@@ -99,15 +134,34 @@ function AddMultiple() {
 				) : (
 					<div className="flex justify-center items-center flex-col gap-2">
 						data verification
-						<input
-							className="bg-slate-200 text-black mt-6 px-5 py-2 rounded-xl hover:cursor-pointer"
-							onClick={() => setStage("first")}
-							type="button"
-							value="go back"
-						/>
+						{ipData ? (
+							<div className="max-sm:w-[calc(100vw-50px)] w-[calc(100vw-400px)] h-[500px]">
+								<AgGridReact
+									gridOptions={gridOptions}
+									rowData={ipData}
+									columnDefs={colDefs}
+									defaultColDef={defaultColDef}
+								/>
+							</div>
+						) : (
+							<div className="">nothing to show, no IPs were added</div>
+						)}
+						<div className="flex justify-center align-middle gap-3">
+							<input
+								className="bg-slate-200 text-black mt-6 px-5 py-2 rounded-xl hover:cursor-pointer"
+								onClick={() => setStage("first")}
+								type="button"
+								value="go back"
+							/>
+							<input
+								className="bg-slate-200 text-black mt-6 px-5 py-2 rounded-xl hover:cursor-pointer"
+								onClick={handleSubmit}
+								type="submit"
+								value="submit"
+							/>
+						</div>
 					</div>
 				)}
-
 			</div>
 		</div>
 	);

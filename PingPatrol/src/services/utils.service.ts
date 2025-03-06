@@ -26,7 +26,10 @@ export function timestampToDataAndTime(timeStamp: number | undefined): string {
 	const year = new Date(timeStamp ?? "0").getFullYear() % 100;
 	return `${time}, ${day}-${month + 1}-${year}`;
 }
-export function ipStringToObj(string: string): IpsToAddType[] {
+export function ipStringToObj(string: string): IpsToAddType[] | null {
+  if(string == ''){
+    return null
+  }
 	const stringArr = string.split(/^/gm).map((string) => string.slice(0, -1));
 	const stringArrNested = stringArr.map((row) =>
 		row.split(",").map((item) => item.trim())
