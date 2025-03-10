@@ -52,7 +52,7 @@ export type ReceivedDomainDataType = {
 };
 
 export type IpsToAddType = {
-	ip: string;
+	ipAddr: string;
 	name: string;
 	isFavorite: boolean;
 };

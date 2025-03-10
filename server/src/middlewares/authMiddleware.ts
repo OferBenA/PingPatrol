@@ -10,13 +10,13 @@ export const authMiddleware = (req: express.Request, res: express.Response, next
       try {
         const userData = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET as string);
         if (typeof userData == 'object') {
-          const session = ACTIVE_USERS_SESSIONS_AND_TOKENS[userData.userId];
-          if (session) {
+          // const session = ACTIVE_USERS_SESSIONS_AND_TOKENS[userData.userId];
+          // if (session) {
             (req as any).userData = userData;
-            session.lastActivity = Date.now();
+            // session.lastActivity = Date.now();
             next();
             return;
-          }
+          // }
         }
       } catch (err) {}
     }

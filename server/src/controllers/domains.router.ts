@@ -73,9 +73,14 @@ domainsRouter.put("/createMultiple", async (req, res) => {
 	const body = req.body;
 	const { userId } = (req as any).userData;
 	const domainId = uuidv4();
-	console.log(body)
 	console.log(userId)
 	try {
+		const user = await UserModel.findOne({ userId: userId });
+		if(!user){
+			res.status(403).send("not able to add domain is forbidden!");
+			return;
+		}
+		console.log(user?.domains)
 
 	} catch (error) {
 		console.error("Error creating a domain in the db: ", error);

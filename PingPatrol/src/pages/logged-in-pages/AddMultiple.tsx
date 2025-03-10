@@ -1,9 +1,7 @@
 import {
-	TextareaHTMLAttributes,
 	memo,
 	useCallback,
 	useMemo,
-	useRef,
 	useState,
 } from "react";
 import { axiosClient } from "../../axiosClient";
@@ -17,14 +15,13 @@ import {
 } from "ag-grid-community";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useUserContext } from "../../Contexts/User-Context";
 import { useNavigate } from "react-router-dom";
 import { useThemeStore } from "../../Store/useTheme";
 import { IpsToAddType } from "../../types/MainTypes";
 import { ipStringToObj } from "../../services/utils.service";
 
 type IRow = {
-	ip: string;
+	ipAddr: string;
 	name: string;
 	isFavorite: boolean;
 };
@@ -38,7 +35,7 @@ function AddMultiple() {
 	const navigation = useNavigate();
 	const theme = useThemeStore((state) => state.theme);
 	const [colDefs] = useState<ColDef<IRow>[]>([
-		{ field: "ip" },
+		{ field: "ipAddr" },
 		{ field: "name", editable: true },
 		{ field: "isFavorite", editable: true },
 	]);
@@ -67,10 +64,11 @@ function AddMultiple() {
 		) as HTMLTextAreaElement;
 		if (textareaString) {
 			const stringArrFormatted = ipStringToObj(textareaString.value);
-			setIpDataRaw(textareaString.value);
 			setIpData(stringArrFormatted);
+			setIpDataRaw(textareaString.value);
 		}
 	};
+
 	const handleStage = () => {
 		setStage("second");
 	};
